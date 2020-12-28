@@ -1,37 +1,37 @@
-import { List, Typography } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import LessonItem from './LessonItem';
+import { List, Typography } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import LessonItem from "./LessonItem";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      backgroundColor: '#2e3d49',
+      backgroundColor: "#2e3d49",
     },
 
     courseHeader: {
       ...theme.mixins.toolbar,
       backgroundColor: grey[400],
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      '&:hover': {
-        cursor: 'pointer',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      "&:hover": {
+        cursor: "pointer",
         textDecoration: `underline ${theme.palette.primary.main}`,
-        '& .courseHeaderIcon': {
+        "& .courseHeaderIcon": {
           color: grey[500],
         },
       },
     },
 
     list: {
-      width: '100%',
+      width: "100%",
       maxHeight: `calc(100vh - 48px)`,
-      overflowY: 'auto',
-      boxSizing: 'content-box',
+      overflowY: "auto",
+      boxSizing: "content-box",
     },
   })
 );
@@ -45,7 +45,7 @@ export default function LessonList() {
       {/* Course header, with name and back navigation */}
       <div
         className={classes.courseHeader}
-        onClick={() => history.push('/learn')}
+        onClick={() => history.push("/learn")}
       >
         <Typography variant="h6" color="primary">
           <ArrowLeftIcon

@@ -1,19 +1,19 @@
-import Collapse from '@material-ui/core/Collapse';
-import { green, grey } from '@material-ui/core/colors';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import DoneIcon from '@material-ui/icons/Done';
-import React from 'react';
+import Collapse from "@material-ui/core/Collapse";
+import { green, grey } from "@material-ui/core/colors";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import DoneIcon from "@material-ui/icons/Done";
+import React from "react";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     course: {
-      border: '1px solid black',
+      border: "1px solid black",
       backgroundColor: grey[300],
-      '&:hover': {
+      "&:hover": {
         backgroundColor: grey[200],
       },
     },
