@@ -1,0 +1,93 @@
+interface Context {
+  /**
+   * Variables
+   */
+
+  // This one use the firebase.auth().currentUser and below are the minimal requirement
+  user: {
+    displayName: string;
+    email: string;
+  };
+
+  // Indicate whether the data is fetching
+  // Used to determine whether or not to display the spinning UI
+  loading: boolean;
+
+  // Used to alert user of an action, whether it's success or fail
+  alert: {
+    type: SuccessAlert | ErrorAlert;
+    message: string;
+  };
+
+  // We fetch user's data on how much user has done
+  // These two below must be fetched first to be display on /learn
+  userProgress: [
+    {
+      lessonId: Lesson_ID;
+      dateComplete: string;
+    }
+  ];
+  // The last lesson user has learned before leaved
+  lastLesson: string;
+  // All the courses
+  courses: [
+    {
+      id: string;
+      courseName: string;
+      content: [{ lessonId: string; lessonName: string }];
+      // Ordinal number, indicate the position in line of the course, as one course must followed by another specific course
+      no: number;
+    }
+  ];
+
+  // This can be fetch in background as we don't immediately need it on /learn
+  // In fact, we only fetch the lesson we need on-the-fly
+  // i.e when user choose a lesson do we fetch it and push to this lessons variable
+  lessons: [
+    {
+      id: string;
+      lessonName: string;
+      quizzes: [
+        {
+          quizId: string;
+          options: [{ quizId: string; optionContent: string }];
+          correct_option: string;
+        }
+      ];
+      instruction: string;
+      practice: {
+        code: string;
+        test: string;
+      };
+      // Ordinal number, indicate the position in line of the lesson, as one lesson must followed by another specific lesson
+      no: number;
+      // Path to file to download
+      files: string[];
+    }
+  ];
+
+  /**
+   * Function
+   */
+
+  // Set the user variable right after user log in and sign out
+  // Which include userProgress and lastLesson
+  // Not include initializing user variable though as this one is formed when user log in
+  initializeUserData: () => void;
+  // Set the userProgress and courses variable the first time user visit /learn
+  // These should run only when user visit /learn for the first time
+  initializeCourses: () => void;
+
+  // Set the loading variable
+  setLoading: (value: boolean) => void;
+  // Fetch the data of one lesson and push that into lessons variable
+  // Return the lesson from firestore
+  fetchLesson: (lessonId: string) => LessonData;
+  // Toggle the done status of a lesson, basically update the userProgress variable
+  completeLesson: (lessonId: string) => void;
+  // Set the alert type and message
+  setAlert: (type: ErrorAlert | SuccessAlert, message: string) => void;
+}
+
+type ErrorAlert = string;
+type SuccessAlert = string;
