@@ -1,8 +1,8 @@
-import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import React from 'react';
-import LessonContent from './LessonContent/LessonContent';
-import LessonList from './LessonList/LessonList';
+import Grid from "@material-ui/core/Grid";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import React from "react";
+import LessonContent from "./LessonContent/LessonContent";
+import LessonList from "./LessonList/LessonList";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) =>
     },
 
     lessonList: {
-      [theme.breakpoints.down('sm')]: {
-        display: 'none',
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
       },
     },
   })

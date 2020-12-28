@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) =>
 
     list: {
       width: "100%",
-      maxHeight: `calc(100vh - 48px)`,
+      maxHeight: `calc(100vh - 65px)`,
       overflowY: "auto",
       boxSizing: "content-box",
     },

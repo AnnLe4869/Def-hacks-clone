@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
     },
     content: {
-      height: "calc(100vh - 48px)",
+      maxHeight: "calc(100vh - 65px)",
       overflow: "auto",
     },
   })
