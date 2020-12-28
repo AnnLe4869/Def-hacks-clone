@@ -1,126 +1,147 @@
-import React from 'react';
-import './footer.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import { Link } from 'react-router-dom';
+import { Grid, Typography } from "@material-ui/core";
+import { lightGreen } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import React from "react";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: lightGreen[300],
+    width: "100%",
+    color: "white",
+    marginTop: "20vh",
+    paddingTop: theme.spacing(4),
+    paddingLeft: theme.spacing(5),
+    paddingBottom: theme.spacing(4),
+  },
+
+  leftColumn: {
+    paddingLeft: theme.spacing(5),
+  },
+
+  columnTitle: {
+    marginBottom: theme.spacing(3),
+  },
+
+  externalLink: {
+    color: "white",
+    marginBottom: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    "&:hover": {
+      color: "white",
+      textDecoration: "underline white",
+    },
+  },
+
+  internalLinkTitle: {
+    marginBottom: theme.spacing(1),
+  },
+  internalLink: {
+    color: "white",
+    "&:hover": {
+      color: "white",
+      textDecoration: "underline white",
+    },
+  },
+
+  copyright: {
+    marginTop: theme.spacing(3),
+  },
+}));
 
 function Footer() {
-  const body = document.body;
-  const html = document.documentElement;
-
-  const docHeight = Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight
-  );
+  const classes = useStyles();
   return (
-    <footer className="ftr" style={{ top: `${docHeight + 100}px` }}>
-      <div className="row">
-        <div className="col">
-          <div className="text-left">
-            <h2>Def Hacks Inc. 2020</h2>
-            <h5>Made by Students for Students</h5>
-          </div>
-        </div>
-        <div className="col-md-auto">
-          <h3>Contact Us</h3>
-          <ul className="ftr-col mt-4">
-            <li>
-              <i
-                className="fab fa-facebook-square"
-                style={{ fontSize: '20px' }}
-              ></i>
-              <a
-                href="https://www.facebook.com/defhacks"
-                target="__blank"
-                className="ml-2"
-              >
-                <span className="h5" style={{ color: 'white' }}>
-                  Facebook
-                </span>
-              </a>
-            </li>
-            <li>
-              <i
-                className="fab fa-twitter-square"
-                style={{ fontSize: '20px' }}
-              ></i>
-              <a
-                href="https://twitter.com/def_hacks"
-                target="__blank"
-                className="ml-2"
-              >
-                <span className="h5" style={{ color: 'white' }}>
-                  Twitter
-                </span>
-              </a>
-            </li>
-            <li>
-              <i className="fab fa-instagram" style={{ fontSize: '20px' }}></i>
+    <div className={classes.root}>
+      <Grid container justify="center" alignItems="flex-start">
+        <Grid item xs={8} md={8} className={classes.leftColumn}>
+          <Typography variant="h2">Def Hacks Inc. 2020</Typography>
+          <Typography variant="h5">Made by Students for Students</Typography>
+        </Grid>
 
-              <a
-                href="https://www.instagram.com/def_hacks/"
-                target="__blank"
-                className="ml-2"
-              >
-                <span className="h5" style={{ color: 'white' }}>
-                  Instagram
-                </span>
-              </a>
-            </li>
-            <li>
-              <i className="fab fa-linkedin" style={{ fontSize: '20px' }}></i>
-              <a
-                href="https://www.linkedin.com/company/def-hacks/"
-                target="__blank"
-                className="ml-2"
-              >
-                <span className="h5" style={{ color: 'white' }}>
-                  LinkedIn
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="col col-md-auto">
-          <h3>Navigate</h3>
-          <ul className="ftr-col mt-4">
-            <li>
-              <Link to="/">
-                <span className="h5" style={{ color: 'white' }}>
-                  Home
-                </span>
+        <Grid
+          container
+          item
+          xs={4}
+          md={4}
+          justify="center"
+          alignItems="flex-start"
+        >
+          <Grid item xs={6} md={6}>
+            <Typography variant="h4" className={classes.columnTitle}>
+              Contact Us
+            </Typography>
+            <Typography
+              variant="h6"
+              className={classes.externalLink}
+              component="a"
+              href=""
+            >
+              <FacebookIcon />
+              <Typography variant="h6">Facebook</Typography>
+            </Typography>
+            <Typography
+              variant="h6"
+              component="a"
+              href=""
+              className={classes.externalLink}
+            >
+              <TwitterIcon />
+              <Typography variant="h6">Twitter</Typography>
+            </Typography>
+            <Typography
+              variant="h6"
+              component="a"
+              href=""
+              className={classes.externalLink}
+            >
+              <InstagramIcon />
+              <Typography variant="h6">Instagram</Typography>
+            </Typography>
+            <Typography
+              variant="h6"
+              component="a"
+              href=""
+              className={classes.externalLink}
+            >
+              <LinkedInIcon />
+              <Typography variant="h6">LinkedIn</Typography>
+            </Typography>
+          </Grid>
+
+          <Grid item xs={6} md={6}>
+            <Typography variant="h4" className={classes.columnTitle}>
+              Navigate
+            </Typography>
+            <Typography variant="h6" className={classes.internalLinkTitle}>
+              <Link to="/" className={classes.internalLink}>
+                Home
               </Link>
-            </li>
-            <li>
-              <Link to="/about">
-                <span className="h5" style={{ color: 'white' }}>
-                  About
-                </span>
+            </Typography>
+            <Typography variant="h6" className={classes.internalLinkTitle}>
+              <Link to="/learn" className={classes.internalLink}>
+                Curriculum
               </Link>
-            </li>
-            <li>
-              <Link to="/explore">
-                <span className="h5" style={{ color: 'white' }}>
-                  Explore
-                </span>
+            </Typography>
+            <Typography variant="h6" className={classes.internalLinkTitle}>
+              <Link to="/about" className={classes.internalLink}>
+                About us
               </Link>
-            </li>
-            <li>
-              <Link to="/account">
-                <span className="h5" style={{ color: 'white' }}>
-                  My Account
-                </span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="text-center">
-        <h5 className="fter-txt">Copyright © Def Hacks Inc. 2020</h5>
-      </div>
-    </footer>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Typography align="center" variant="h5" className={classes.copyright}>
+        Copyright © Def Hacks Inc. 2020
+      </Typography>
+    </div>
   );
 }
 

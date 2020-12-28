@@ -1,7 +1,8 @@
 import { Container, CssBaseline } from "@material-ui/core";
 import React from "react";
 import Header from "../../common/header/AppBarHeader";
-import LogIn from "./login/LogIn";
+import Footer from "../../common/footer/Footer";
+import LogIn from "./root/LogIn";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 import EmailInput from "./email/EmailInput";
@@ -23,6 +24,7 @@ export default function Auth() {
           <Redirect to="/auth" />
         </Switch>
       </Container>
+      <Footer />
     </>
   );
 }
