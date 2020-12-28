@@ -10,7 +10,7 @@ import Home from "./pages/home/Home";
 import About from "./pages/about/About";
 import Learn from "./pages/learn";
 // import Profile from "./pages/profile/ExistAccount";
-import Auth from "./pages/auth/Login";
+import Auth from "./pages/auth/index";
 
 function App() {
   const context = useContext(AppContext);
