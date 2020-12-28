@@ -1,15 +1,16 @@
-import { Container, Button, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { useContext } from 'react';
-import AppContext from '../../../../context/AppContext.js';
-import { green } from '@material-ui/core/colors';
+import { Container, Button, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from "react";
+import AppContext from "../../../../context/AppContext.js";
+import { green } from "@material-ui/core/colors";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(5),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '60%',
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "60%",
     },
   },
 
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   promptSignInButton: {
     marginTop: theme.spacing(3),
     backgroundColor: green[400],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: green[100],
     },
   },
@@ -29,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Greeting() {
   const classes = useStyles();
   const { user } = useContext(AppContext);
+
+  const history = useHistory();
+
+  const signIn = () => {
+    history.push("/auth");
+  };
   return (
     <Container maxWidth="lg" className={classes.root}>
       {user ? (
@@ -80,6 +87,7 @@ export default function Greeting() {
             fullWidth
             size="large"
             className={classes.promptSignInButton}
+            onClick={signIn}
           >
             Sign in to save your progress
           </Button>

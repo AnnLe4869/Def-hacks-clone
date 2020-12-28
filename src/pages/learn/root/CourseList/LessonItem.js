@@ -1,41 +1,43 @@
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Radio from '@material-ui/core/Radio';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Radio from "@material-ui/core/Radio";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import AppContext from "../../../../context/AppContext";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     nested: {
       paddingLeft: theme.spacing(5),
-      '&:hover': {
-        textDecoration: 'underline',
+      "&:hover": {
+        textDecoration: "underline",
       },
     },
   })
 );
 
-export default function CourseItem() {
+export default function CourseItem(props) {
   const classes = useStyles();
   const history = useHistory();
+  const { lesson, course } = props;
+  const context = useContext(AppContext);
 
-  const [checked, setChecked] = React.useState([0]);
-  const handleClick = () => {
-    setChecked(!checked);
+  const goToLesson = () => {
+    history.push(`/learn/courses/${course.id}/lessons/${lesson.id}`);
   };
 
   return (
-    <ListItem
-      button
-      className={classes.nested}
-      onClick={() => history.push('/learn/courses/courseId/lessons/lessonId')}
-    >
+    <ListItem button className={classes.nested} onClick={goToLesson}>
       <ListItemIcon>
-        <Radio checked={checked} onChange={handleClick} />
+        <Radio
+          checked={context.userProgress.includes(
+            (doneLesson) => doneLesson.id === lesson.id
+          )}
+        />
       </ListItemIcon>
-      <ListItemText primary="HTML" />
+      <ListItemText primary={lesson.lessonName} />
     </ListItem>
   );
 }

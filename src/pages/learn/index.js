@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/AppBarHeader";
@@ -8,7 +8,19 @@ import Lesson from "./lesson/index";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 
+import AppContext from "../../context/AppContext";
+
 export default function Learn() {
+  const context = useContext(AppContext);
+
+  useEffect(() => {
+    // If we haven't fetch all the course yet, do so
+    // This should only run one when this component first mount
+    if (!context.courses.length > 2) {
+      context.initializeCourses();
+    }
+  }, []);
+
   return (
     <Switch>
       <Route path="/learn" exact>

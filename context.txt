@@ -23,7 +23,7 @@ interface Context {
   // These two below must be fetched first to be display on /learn
   userProgress: [
     {
-      lessonId: Lesson_ID;
+      id: Lesson_ID;
       dateComplete: string;
     }
   ];
@@ -34,7 +34,7 @@ interface Context {
     {
       id: string;
       courseName: string;
-      content: [{ lessonId: string; lessonName: string }];
+      content: [{ id: string; lessonName: string }];
       // Ordinal number, indicate the position in line of the course, as one course must followed by another specific course
       no: number;
     }
@@ -49,8 +49,8 @@ interface Context {
       lessonName: string;
       quizzes: [
         {
-          quizId: string;
-          options: [{ quizId: string; optionContent: string }];
+          id: string;
+          options: [{ id: string; optionContent: string }];
           correct_option: string;
         }
       ];

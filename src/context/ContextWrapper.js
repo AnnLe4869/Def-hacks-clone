@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import AppContext from './AppContext';
-import firebase from 'firebase';
+import React, { useState, useEffect } from "react";
+import AppContext from "./AppContext";
+import firebase from "firebase";
 
 export default function ContextWrapper(props) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({});
   const [userProgress, setUserProgress] = useState([]);
-  const [lastLesson, setLastLesson] = useState('');
+  const [lastLesson, setLastLesson] = useState("");
   const [courses, setCourses] = useState([]);
   const [lessons, setLessons] = useState([]);
 
@@ -26,7 +26,7 @@ export default function ContextWrapper(props) {
     try {
       const db = firebase.firestore();
       if (user) {
-        const userData = (await db.collection('user').get(user.id)).data();
+        const userData = (await db.collection("user").get(user.id)).data();
         setUserProgress(userData.progress);
         setLastLesson(userData.lastLesson);
       }
@@ -38,8 +38,11 @@ export default function ContextWrapper(props) {
   const initializeCourses = async () => {
     try {
       const db = firebase.firestore();
-      const snapshots = await db.collection('course').get();
-      const courses = snapshots.map((doc) => doc.data());
+      const snapshots = await db.collection("course").get();
+      // Sort courses in order of no
+      const courses = snapshots
+        .map((doc) => doc.data())
+        .sort((a, b) => a.no - b.no);
       setCourses(courses);
     } catch (err) {
       console.error(err);
@@ -50,7 +53,7 @@ export default function ContextWrapper(props) {
     try {
       const db = firebase.firestore();
       // Fetch the lesson using the lessonId parameter
-      const lessonRef = db.collection('lesson').doc(lessonId);
+      const lessonRef = db.collection("lesson").doc(lessonId);
       const lessonData = (await lessonRef.get()).data();
       // Push the lesson into the lessons state variable
       setLessons([...lessons, { id: lessonId, ...lessonData }]);
@@ -65,7 +68,7 @@ export default function ContextWrapper(props) {
     try {
       const db = firebase.firestore();
       // Find the user reference
-      const userRef = db.collection('user').doc(user.id);
+      const userRef = db.collection("user").doc(user.id);
 
       // Get the updated user's progress
       const updatedUserProgress = await db.runTransaction(
