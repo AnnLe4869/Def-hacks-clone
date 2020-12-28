@@ -1,209 +1,133 @@
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Alert, Form, Button, Container } from 'react-bootstrap';
+import {
+  Button,
+  Container,
+  CssBaseline,
+  SvgIcon,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import MailIcon from "@material-ui/icons/Mail";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import React from "react";
+import Header from "../../common/header/AppBarHeader";
 
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  submit: {
+    margin: theme.spacing(1, 0, 2),
+  },
+}));
 
-import Footer from '../../common/footer/Footer';
+export default function LogIn() {
+  const classes = useStyles();
 
-import Swal from 'sweetalert2';
-
-const SignIn = ({ history }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-
-  // These hooks from material-ui is used for checking the current width of the window
-  // In particularly, check whether the window is over sm scale
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const signInWithEmailAndPasswordHandler = (event) => {
-    event.preventDefault();
-    // firebase
-    //   .login(email, password)
-    //   .then(() => {
-    //     // alert('Login Successful');
-    //     setEmail('');
-    //     setPassword('');
-    //     history.push('/dashboard');
-    //   })
-    //   .catch((err) => {
-    //     // alert(`Error: ${err.message}`);
-    //     setError(err.message);
-    //     setPassword('');
-    //   });
+  const handleGoogleLogIn = () => {
+    console.log("Google");
   };
-
-  const emailValid = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+  const handleTwitterLogIn = () => {
+    console.log("Twitter");
   };
-
-  const signInWithGoogle = () => {
-    // firebase
-    //   .signInWithGoogle()
-    //   .then(() => {
-    //     setEmail('');
-    //     setPassword('');
-    //     history.push('/dashboard');
-    //   })
-    //   .catch((err) => {
-    //     setError(err.message);
-    //     setPassword('');
-    //   });
+  const handleGithubLogIn = () => {
+    console.log("Github");
   };
-
-  const onChangeHandler = (event) => {
-    const { name, value } = event.currentTarget;
-
-    if (name === 'email') {
-      setEmail(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    }
+  const handleEmailLogIn = () => {
+    console.log("Email");
   };
 
   return (
     <>
-      <Container>
-        {error !== null && <Alert variant="danger">{error}</Alert>}
+      <Header />
+      <Container component="main" maxWidth="md">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h3" variant="h3">
+            Sign in
+          </Typography>
 
-        <div>{/* Space for future decoration */}</div>
-        <h1 style={{ textAlign: 'center' }}>Sign in</h1>
-
-        <Form onSubmit={signInWithEmailAndPasswordHandler}>
-          <Form.Group
-            controlId="formBasicEmail"
-            style={matches ? { width: '50%', marginLeft: '25%' } : null}
-          >
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={onChangeHandler}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group
-            controlId="formBasicPassword"
-            style={matches ? { width: '50%', marginLeft: '25%' } : null}
-          >
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={onChangeHandler}
-              required
-            />
-          </Form.Group>
-
+          {/* Google sign in */}
           <Button
-            variant="success"
             type="submit"
-            style={{
-              width: matches ? '50%' : null,
-              marginLeft: matches ? '25%' : null,
-            }}
-            block
+            variant="outlined"
+            color="default"
+            fullWidth
+            size="large"
+            onClick={handleGoogleLogIn}
+            className={classes.submit}
+            startIcon={
+              <SvgIcon
+                viewBox="0 0 256 262"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="xMidYMid"
+              >
+                <path
+                  d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                  fill="#34A853"
+                />
+                <path
+                  d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                  fill="#EB4335"
+                />
+              </SvgIcon>
+            }
           >
-            Log in
+            Continue with Google
+          </Button>
+          {/* Twitter sign in */}
+          <Button
+            type="submit"
+            variant="outlined"
+            color="primary"
+            fullWidth
+            size="large"
+            startIcon={<TwitterIcon />}
+            className={classes.submit}
+            onClick={handleTwitterLogIn}
+          >
+            Continue with Twitter
+          </Button>
+          {/* GitHub sign in */}
+          <Button
+            type="submit"
+            variant="outlined"
+            color="default"
+            fullWidth
+            size="large"
+            onClick={handleGithubLogIn}
+            className={classes.submit}
+            startIcon={<GitHubIcon />}
+          >
+            Continue with GitHub
           </Button>
 
+          {/* Email sign in */}
           <Button
-            variant="light"
-            type="button"
-            style={{
-              width: matches ? '50%' : null,
-              marginLeft: matches ? '25%' : null,
-              backgroundColor: '#fff',
-              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-            }}
-            block
-            onClick={signInWithGoogle}
+            type="submit"
+            variant="outlined"
+            color="default"
+            fullWidth
+            size="large"
+            startIcon={<MailIcon />}
+            className={classes.submit}
+            onClick={handleEmailLogIn}
           >
-            <img
-              src="/assets/google-logo.svg"
-              alt="google-logo"
-              style={{
-                display: 'inline-block',
-                maxWidth: '30px',
-                maxHeight: '30px',
-                marginLeft: '-5%',
-                marginRight: '5%',
-              }}
-            />
-            <span>Sign in with Google</span>
+            Continue with Email
           </Button>
-        </Form>
-        <div className="text-center mt-3">
-          <p>
-            Don't have an account ? {'  '}
-            <Link to="/signup">Sign up here</Link>
-          </p>
-          <button
-            className="btn"
-            style={{
-              padding: '5px',
-            }}
-            onClick={() => {
-              Swal.fire({
-                title: 'Enter your Email Address',
-                input: 'text',
-                inputAttributes: {
-                  autocapitalize: 'off',
-                },
-                showCancelButton: true,
-                confirmButtonText: 'Send Reset Instructions',
-                showLoaderOnConfirm: true,
-                allowOutsideClick: () => !Swal.isLoading(),
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  // if (emailValid(result.value)) {
-                  //   let auth = firebase.authReturn();
-                  //   auth
-                  //     .sendPasswordResetEmail(result.value)
-                  //     .then(function () {
-                  //       Swal.fire(
-                  //         'Sent!',
-                  //         'We have sent an password reset link to your Email',
-                  //         'success'
-                  //       );
-                  //     })
-                  //     .catch(function (error) {
-                  //       Swal.fire({
-                  //         icon: 'error',
-                  //         title: 'Oops...',
-                  //         text: "This email address hasn't been registered!",
-                  //       });
-                  //     });
-                  //   // If email is found in account database: Invoke reset action
-                  //   // Else: Fire error alert
-                  // } else {
-                  //   Swal.fire({
-                  //     icon: 'error',
-                  //     title: 'Oops...',
-                  //     text: 'Invalid Email Address!',
-                  //   });
-                  // }
-                }
-              });
-            }}
-          >
-            <p style={{ color: '#38BC9C' }}>Forgot Password?</p>
-          </button>
         </div>
       </Container>
-
-      {/* Footer fo here */}
-      <Footer />
     </>
   );
-};
-export default withRouter(SignIn);
+}

@@ -11,20 +11,6 @@ const useStyles = makeStyles((theme) =>
     root: {
       flexGrow: 1,
     },
-    headerBar: {
-      backgroundColor: grey[700],
-      boxShadow: "none",
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    content: {
-      maxHeight: "calc(100vh - 65px)",
-      overflow: "auto",
-    },
   })
 );
 
