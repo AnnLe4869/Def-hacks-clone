@@ -9,6 +9,8 @@ export default function Guide() {
     console.log("re-render");
   });
 
-  const markdown = DOMPurify.sanitize(lesson.instruction);
+  const markdown = DOMPurify.sanitize(lesson.instruction, {
+    ADD_TAGS: ["iframe"],
+  });
   return <div dangerouslySetInnerHTML={{ __html: markdown }} />;
 }
