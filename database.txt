@@ -14,7 +14,7 @@ interface User {
 interface Course {
   id: Course_ID;
   courseName: string;
-  content: [{ id: string; lessonName: Lesson_ID }];
+  content: [{ id: string; lessonName: Lesson_ID; no: number }];
   // Ordinal number, indicate the position in line of the course, as one course must followed by another specific course
   no: number;
 }

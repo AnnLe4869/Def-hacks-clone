@@ -57,7 +57,11 @@ export default function ContextWrapper(props) {
       // Sort courses in order of no
       const courses = [];
       snapshots.forEach((doc) => {
-        courses.push({ ...doc.data(), id: doc.id });
+        courses.push({
+          ...doc.data(),
+          id: doc.id,
+          content: doc.data().content.sort((a, b) => a.no - b.no),
+        });
       });
       const sortedCourses = courses.sort((a, b) => a.no - b.no);
       setCourses(sortedCourses);

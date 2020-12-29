@@ -16,7 +16,6 @@ export default function Learn() {
   useEffect(() => {
     // If we haven't fetch all the course yet, do so
     // This should only run one when this component first mount
-    console.log(context.courses.length);
     if (!(context.courses.length > 2)) {
       context.initializeCourses();
     }
