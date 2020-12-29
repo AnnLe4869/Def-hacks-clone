@@ -1,21 +1,21 @@
-import React from 'react';
+import React from "react";
 
 export default React.createContext({
   user: null,
   loading: false,
   alert: {
-    type: 'success',
-    message: '',
+    type: "success",
+    message: "",
   },
   userProgress: [],
-  lastLesson: '',
+  lastLesson: "",
   courses: [],
   lessons: [],
   initializeUserData: () => {},
   initializeCourses: () => {},
 
   setLoading: () => {},
-  fetchLesson: () => {},
+  startLesson: () => {},
   completeLesson: () => {},
   setAlert: () => {},
 });

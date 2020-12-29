@@ -80,9 +80,9 @@ interface Context {
 
   // Set the loading variable
   setLoading: (value: boolean) => void;
-  // Fetch the data of one lesson and push that into lessons variable
+  // Fetch the data of one lesson, update lastLesson in firebase and push that into lessons variable
   // Return the lesson from firestore
-  fetchLesson: (lessonId: string) => LessonData;
+  startLesson: (lessonId: string) => LessonData;
   // Toggle the done status of a lesson, basically update the userProgress variable
   completeLesson: (lessonId: string) => void;
   // Set the alert type and message

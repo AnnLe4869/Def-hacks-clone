@@ -15,18 +15,32 @@ export default function ContextWrapper(props) {
     // Start this callback which will run whenever user change or user login/logout
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setUser(user);
+        setUser({ ...user, id: user.uid });
       } else {
         setUser(null);
       }
     });
   }, []);
 
-  const initializeUserData = async () => {
+  const initializeUserData = async (authenticatedUser, additionalUserInfo) => {
     try {
       const db = firebase.firestore();
-      if (user) {
-        const userData = (await db.collection("user").get(user.id)).data();
+      // Check if user is signed in for the first time
+      if (additionalUserInfo.isNewUser) {
+        // If it is, create the blank userProgress and lastLesson
+        await db.collection("user").doc(authenticatedUser.uid).set({
+          displayName: authenticatedUser.displayName,
+          email: authenticatedUser.email,
+          progress: [],
+          lastLesson: "",
+        });
+        setUserProgress([]);
+        setLastLesson(null);
+      } else {
+        // Get user data
+        const userData = (
+          await db.collection("user").get(authenticatedUser.uid)
+        ).data();
         setUserProgress(userData.progress);
         setLastLesson(userData.lastLesson);
       }
@@ -38,6 +52,7 @@ export default function ContextWrapper(props) {
   const initializeCourses = async () => {
     try {
       const db = firebase.firestore();
+      // Fetch all the existing courses
       const snapshots = await db.collection("course").get();
       // Sort courses in order of no
       const courses = snapshots
@@ -49,7 +64,7 @@ export default function ContextWrapper(props) {
     }
   };
 
-  const fetchLesson = async (lessonId) => {
+  const startLesson = async (lessonId) => {
     try {
       const db = firebase.firestore();
       // Fetch the lesson using the lessonId parameter
@@ -110,7 +125,7 @@ export default function ContextWrapper(props) {
         initializeUserData,
         initializeCourses,
         setLoading,
-        fetchLesson,
+        startLesson,
         completeLesson,
         setAlert,
       }}

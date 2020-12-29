@@ -4,8 +4,8 @@ interface User {
   email: string;
   progress: [
     {
-      lesson_id: Lesson_ID;
-      date_complete: string;
+      id: Lesson_ID;
+      dateComplete: string;
     }
   ];
   lastLesson: Lesson_ID;
@@ -14,19 +14,19 @@ interface User {
 interface Course {
   id: Course_ID;
   course_name: string;
-  content: [{ lesson_id: string; lesson_name: Lesson_ID }];
+  content: [{ id: string; lessonName: Lesson_ID }];
   // Ordinal number, indicate the position in line of the course, as one course must followed by another specific course
   no: number;
 }
 
 interface Lesson {
   id: Lesson_ID;
-  lesson_name: string;
+  lessonName: string;
   quizzes: [
     {
-      quiz_id: Quiz_ID;
-      options: [{ option_id: Option_ID; option_content: string }];
-      correct_option: Option_ID;
+      id: Quiz_ID;
+      options: [{ option_id: Option_ID; optionContent: string }];
+      correctOption: Option_ID;
     }
   ];
   instruction: string;

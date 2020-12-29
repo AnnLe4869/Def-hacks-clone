@@ -3,8 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import MailIcon from "@material-ui/icons/Mail";
 import TwitterIcon from "@material-ui/icons/Twitter";
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import AppContext from "../../../context/AppContext";
+
+import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -21,9 +24,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Auth() {
   const classes = useStyles();
   const history = useHistory();
+  const context = useContext(AppContext);
 
-  const handleGoogleLogIn = () => {
-    console.log("Google");
+  const handleGoogleLogIn = async () => {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const result = await firebase.auth().signInWithPopup(provider);
+      context.initializeUserData(result.user, result.additionalUserInfo);
+    } catch (err) {
+      console.error(err);
+    }
   };
   const handleTwitterLogIn = () => {
     console.log("Twitter");
