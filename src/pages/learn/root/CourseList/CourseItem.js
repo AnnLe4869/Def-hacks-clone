@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) =>
     },
     lessonList: {
       backgroundColor: grey[50],
-      marginBottom: theme.spacing(5),
+      marginBottom: theme.spacing(2),
     },
   })
 );

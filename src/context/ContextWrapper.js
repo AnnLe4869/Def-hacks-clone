@@ -55,10 +55,12 @@ export default function ContextWrapper(props) {
       // Fetch all the existing courses
       const snapshots = await db.collection("course").get();
       // Sort courses in order of no
-      const courses = snapshots
-        .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .sort((a, b) => a.no - b.no);
-      setCourses(courses);
+      const courses = [];
+      snapshots.forEach((doc) => {
+        courses.push({ ...doc.data(), id: doc.id });
+      });
+      const sortedCourses = courses.sort((a, b) => a.no - b.no);
+      setCourses(sortedCourses);
     } catch (err) {
       console.error(err);
     }
