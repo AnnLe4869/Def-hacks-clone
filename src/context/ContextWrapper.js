@@ -56,7 +56,7 @@ export default function ContextWrapper(props) {
       const snapshots = await db.collection("course").get();
       // Sort courses in order of no
       const courses = snapshots
-        .map((doc) => doc.data())
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
         .sort((a, b) => a.no - b.no);
       setCourses(courses);
     } catch (err) {

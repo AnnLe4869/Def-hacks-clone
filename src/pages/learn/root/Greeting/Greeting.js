@@ -40,7 +40,7 @@ export default function Greeting() {
     <Container maxWidth="lg" className={classes.root}>
       {user ? (
         <Typography variant="h3" align="center">
-          Welcome back Anh
+          Welcome back {user.displayName}
         </Typography>
       ) : (
         <div>

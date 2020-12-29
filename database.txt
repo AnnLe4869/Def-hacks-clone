@@ -1,6 +1,6 @@
 interface User {
   id: User_ID;
-  display_name: string;
+  displayName: string;
   email: string;
   progress: [
     {
@@ -13,7 +13,7 @@ interface User {
 
 interface Course {
   id: Course_ID;
-  course_name: string;
+  courseName: string;
   content: [{ id: string; lessonName: Lesson_ID }];
   // Ordinal number, indicate the position in line of the course, as one course must followed by another specific course
   no: number;

@@ -31,6 +31,8 @@ export default function Auth() {
       const provider = new firebase.auth.GoogleAuthProvider();
       const result = await firebase.auth().signInWithPopup(provider);
       context.initializeUserData(result.user, result.additionalUserInfo);
+      // After all that, go to /learn route
+      history.push("/learn");
     } catch (err) {
       console.error(err);
     }

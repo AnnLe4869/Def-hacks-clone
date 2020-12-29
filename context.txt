@@ -51,7 +51,7 @@ interface Context {
         {
           id: string;
           options: [{ id: string; optionContent: string }];
-          correct_option: string;
+          correctOption: string;
         }
       ];
       instruction: string;
