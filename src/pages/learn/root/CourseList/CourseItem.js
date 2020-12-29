@@ -46,7 +46,7 @@ export default function CourseItem(props) {
         <div className={classes.lessonList}>
           <List component="div" disablePadding>
             {course.content.map((lesson) => (
-              <LessonItem lesson={lesson} course={course} />
+              <LessonItem key={lesson.id} lesson={lesson} course={course} />
             ))}
           </List>
         </div>

@@ -15,7 +15,6 @@ import Guide from "./Guide/Guide";
 import React, { useContext, useEffect } from "react";
 import AppContext from "../../../../context/AppContext";
 import useLessonFromPath from "../../../../utils/useLessonFromPath";
-import useCourseFromPath from "../../../../utils/useCourseFromPath";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -51,7 +50,7 @@ export default function LessonContent() {
     if (!context.lessons.includes((lesson) => lesson.id === params.lessonId)) {
       context.startLesson(params.lessonId);
     }
-  }, [params.lessonId, context]);
+  }, [params.lessonId]);
 
   if (!lesson) return <div>Loading</div>;
 

@@ -26,7 +26,7 @@ export default function CourseList() {
     <Container className={classes.root}>
       <List component="nav" aria-labelledby="nested-list-subheader">
         {context.courses.map((course) => (
-          <CourseItem course={course} />
+          <CourseItem key={course.id} course={course} />
         ))}
       </List>
     </Container>
