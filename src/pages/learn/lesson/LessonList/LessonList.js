@@ -66,7 +66,7 @@ export default function LessonList() {
       <div className={classes.list}>
         <List component="nav" style={{ padding: 0 }}>
           {course.content.map((lesson) => (
-            <LessonItem lesson={lesson} />
+            <LessonItem key={lesson.id} lesson={lesson} />
           ))}
         </List>
       </div>
