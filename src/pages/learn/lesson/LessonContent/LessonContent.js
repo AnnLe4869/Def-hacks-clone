@@ -12,7 +12,9 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import Quiz from "./Quiz/QuizList";
 import Guide from "./Guide/Guide";
 
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import AppContext from "../../../../context/AppContext";
+import useLessonFromPath from "../../../../utils/useLessonFromPath";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -38,11 +40,19 @@ const useStyles = makeStyles((theme) =>
 
 export default function LessonContent() {
   const classes = useStyles();
+  const context = useContext(AppContext);
 
-  const { url, path } = useRouteMatch();
+  const { url, path, params } = useRouteMatch();
+  const lesson = useLessonFromPath();
+
+  useEffect(() => {
+    context.startLesson(params.lessonId);
+  }, [params.lessonId]);
+
+  if (!lesson) return <div>Loading</div>;
 
   return (
-    <>
+    <div>
       <div className={classes.root}>
         {/* App bar that show the lesson name */}
         <AppBar position="static" className={classes.headerBar}>
@@ -77,6 +87,6 @@ export default function LessonContent() {
           </Switch>
         </Container>
       </div>
-    </>
+    </div>
   );
 }

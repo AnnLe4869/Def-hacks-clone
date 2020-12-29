@@ -7,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import DoneIcon from "@material-ui/icons/Done";
 import React from "react";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -23,12 +24,16 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function LessonItem() {
+export default function LessonItem(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
+  const { lesson } = props;
+  // This is the ID of the selected lesson we are viewing
+  const { lessonId, courseId } = useParams();
 
   const handleClick = () => {
-    setOpen(!open);
+    // We change the url to our wanted lesson, thus make it open
+    history.push(`/learn/courses/${courseId}/lessons/${lesson.id}`);
   };
 
   return (
@@ -37,9 +42,9 @@ export default function LessonItem() {
         <ListItemIcon>
           <DoneIcon style={{ color: green[500] }} />
         </ListItemIcon>
-        <ListItemText primary="Intro to Web" />
+        <ListItemText primary={lesson.lessonName} />
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={lessonId === lesson.id} timeout="auto" unmountOnExit>
         <div className={classes.lessonList}>
           <List component="div" disablePadding>
             <ListItem>Practice</ListItem>

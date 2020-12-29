@@ -4,6 +4,7 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import useCourseFromPath from "../../../../utils/useCourseFromPath";
 import LessonItem from "./LessonItem";
 
 const useStyles = makeStyles((theme) =>
@@ -40,6 +41,10 @@ export default function LessonList() {
   const classes = useStyles();
   const history = useHistory();
 
+  const course = useCourseFromPath();
+
+  if (!course) return <div>Loading</div>;
+
   return (
     <div className={classes.root}>
       {/* Course header, with name and back navigation */}
@@ -53,18 +58,16 @@ export default function LessonList() {
             fontSize="large"
             className="courseHeaderIcon"
           />
-          Intro to HTML
+          {course.courseName}
         </Typography>
       </div>
 
       {/* Course lesson list */}
       <div className={classes.list}>
         <List component="nav" style={{ padding: 0 }}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(
-            () => (
-              <LessonItem />
-            )
-          )}
+          {course.content.map((lesson) => (
+            <LessonItem lesson={lesson} />
+          ))}
         </List>
       </div>
     </div>
