@@ -23,47 +23,46 @@ export default function Learn() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   async function uploadData() {
-  //     try {
-  //       const db = firebase.firestore();
-  //       const batch = db.batch();
+  useEffect(() => {
+    async function uploadData() {
+      try {
+        const db = firebase.firestore();
 
-  //       // Create a list for lessonId
-  //       const simplifiesLessons = [];
+        const lessonSnapshots = await db.collection("lesson").get();
+        const lessons = [];
+        lessonSnapshots.forEach((doc) => {
+          lessons.push({
+            id: doc.id,
+            lessonName: doc.data().lessonName,
+          });
+        });
 
-  //       lessons.forEach((lesson) => {
-  //         const lessonRef = db.collection("lesson").doc();
-  //         batch.set(lessonRef, lesson);
-  //         simplifiesLessons.push({
-  //           id: lessonRef.id,
-  //           lessonName: lesson.lessonName,
-  //         });
-  //       });
+        const courseSnapshots = await db.collection("course").get();
+        const courses = [];
+        courseSnapshots.forEach((doc) => {
+          courses.push({
+            ...doc.data(),
+            id: doc.id,
+          });
+        });
 
-  //       let x = 0;
+        await db.runTransaction(async (transaction) => {
+          let x = 0;
+          courses.forEach((course) => {
+            const courseRef = db.collection("course").doc(course.id);
+            transaction.update(courseRef, {
+              content: lessons.slice(x, x + course.no),
+            });
+            x += course.no;
+          });
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
-  //       courses.forEach((course) => {
-  //         const courseRef = db.collection("course").doc();
-  //         const completeCourse = {
-  //           ...course,
-  //           //content: [simplifiesLessons.splice(x, x + course.no + 1)],
-  //         };
-  //         batch.set(courseRef, completeCourse);
-
-  //         x += course.no + 1;
-  //       });
-
-  //       console.log(simplifiesLessons);
-
-  //       await batch.commit();
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
-
-  //   uploadData();
-  // }, []);
+    uploadData();
+  }, []);
 
   return (
     <Switch>
