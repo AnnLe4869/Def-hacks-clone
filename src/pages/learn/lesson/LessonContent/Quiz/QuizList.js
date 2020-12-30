@@ -27,7 +27,7 @@ export default function Quiz() {
         selectedOption,
       },
     ];
-    console.log(updatedState);
+    // console.log(updatedState);
     return updatedState;
   };
 
@@ -40,7 +40,7 @@ export default function Quiz() {
   return (
     <FormControl component="fieldset">
       {state.map((quiz) => (
-        <QuizItem handleChange={dispatch} quiz={quiz} />
+        <QuizItem handleChange={dispatch} quiz={quiz} key={quiz.id} />
       ))}
 
       <Button variant="contained" color="primary" onClick={handleSubmit}>

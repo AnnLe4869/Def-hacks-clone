@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) =>
 export default function Quiz(props) {
   const classes = useStyles();
 
+  console.log(props.quiz);
+
   const handleChange = (event) => {
     props.handleChange([event.target.name, event.target.value]);
   };
@@ -32,6 +34,7 @@ export default function Quiz(props) {
       >
         {props.quiz.options.map((option) => (
           <FormControlLabel
+            key={option.id}
             value={option.id}
             control={<Radio />}
             label={option.optionContent}
