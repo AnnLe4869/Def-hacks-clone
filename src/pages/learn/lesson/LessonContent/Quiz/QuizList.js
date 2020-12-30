@@ -7,17 +7,31 @@ import QuizItem from "./QuizItem";
 export default function Quiz() {
   const { quizzes } = useLessonFromPath();
 
+  // We add a selectedOption for the purpose of recording user choices
+  // This only limited to the component level, not global context
+  const initialState = quizzes.map((quiz) => ({
+    ...quiz,
+    selectedOption: null,
+  }));
+
   const reducer = (currentState, action) => {
-    const [id, value] = action;
-    console.log("In reducer");
-    console.log(action);
-    return [
-      ...currentState.filter((quiz) => quiz.id !== id),
-      { quizId: id, selectedOption: value },
+    const [quizId, selectedOption] = action;
+
+    const currentQuiz = currentState.find((quiz) => quiz.id === quizId);
+
+    const updatedState = [
+      ...currentState.filter((quiz) => quiz.id !== quizId),
+      {
+        ...currentQuiz,
+        quizId,
+        selectedOption,
+      },
     ];
+    console.log(updatedState);
+    return updatedState;
   };
 
-  const [state, dispatch] = useReducer(reducer, quizzes);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleSubmit = (name, value) => {
     console.log("Hello world");

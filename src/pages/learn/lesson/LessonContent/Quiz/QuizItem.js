@@ -15,11 +15,9 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function Quiz(props) {
-  const [value, setValue] = useState();
   const classes = useStyles();
 
   const handleChange = (event) => {
-    setValue(event.target.value);
     props.handleChange([event.target.name, event.target.value]);
   };
 
@@ -29,7 +27,7 @@ export default function Quiz(props) {
       <RadioGroup
         aria-label="gender"
         name={props.quiz.id}
-        value={value}
+        value={props.quiz.selectedOption}
         onChange={handleChange}
       >
         {props.quiz.options.map((option) => (
