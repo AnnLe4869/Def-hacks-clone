@@ -9,6 +9,8 @@ export default function Quiz() {
 
   const reducer = (currentState, action) => {
     const [id, value] = action;
+    console.log("In reducer");
+    console.log(action);
     return [
       ...currentState.filter((quiz) => quiz.id !== id),
       { quizId: id, selectedOption: value },
@@ -23,8 +25,8 @@ export default function Quiz() {
 
   return (
     <FormControl component="fieldset">
-      {state.map(() => (
-        <QuizItem handleChange={dispatch} />
+      {state.map((quiz) => (
+        <QuizItem handleChange={dispatch} quiz={quiz} />
       ))}
 
       <Button variant="contained" color="primary" onClick={handleSubmit}>

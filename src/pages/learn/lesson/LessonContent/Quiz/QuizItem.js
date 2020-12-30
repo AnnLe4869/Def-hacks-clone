@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function Quiz(props) {
-  const [value, setValue] = useState("female");
+  const [value, setValue] = useState();
   const classes = useStyles();
 
   const handleChange = (event) => {
@@ -28,13 +28,17 @@ export default function Quiz(props) {
       <FormLabel component="h5">Gender</FormLabel>
       <RadioGroup
         aria-label="gender"
-        name="gender1"
+        name={props.quiz.id}
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
+        {props.quiz.options.map((option) => (
+          <FormControlLabel
+            value={option.id}
+            control={<Radio />}
+            label={option.optionContent}
+          />
+        ))}
       </RadioGroup>
     </>
   );
