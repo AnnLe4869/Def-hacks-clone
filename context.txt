@@ -50,8 +50,10 @@ interface Context {
       quizzes: [
         {
           id: string;
+          question: string;
           options: [{ id: string; optionContent: string }];
           correctOption: string;
+          explanation: string
         }
       ];
       instruction: string;

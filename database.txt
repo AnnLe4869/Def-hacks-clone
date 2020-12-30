@@ -25,8 +25,10 @@ interface Lesson {
   quizzes: [
     {
       id: Quiz_ID;
+      question: string;
       options: [{ option_id: Option_ID; optionContent: string }];
       correctOption: Option_ID;
+      explanation: string
     }
   ];
   instruction: string;
