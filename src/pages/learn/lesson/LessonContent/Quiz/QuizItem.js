@@ -20,7 +20,7 @@ export default function Quiz(props) {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    props.handleChange(event.target.name, event.target.value);
+    props.handleChange([event.target.name, event.target.value]);
   };
 
   return (

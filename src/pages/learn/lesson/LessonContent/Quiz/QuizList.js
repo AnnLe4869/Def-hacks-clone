@@ -1,27 +1,11 @@
 import { Button } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import React, { useReducer } from "react";
+import useLessonFromPath from "../../../../../utils/useLessonFromPath";
 import QuizItem from "./QuizItem";
 
 export default function Quiz() {
-  const quizzes = [
-    {
-      quizId: 1,
-      selectedOption: 1,
-    },
-    {
-      quizId: 2,
-      selectedOption: 3,
-    },
-    {
-      quizId: 3,
-      selectedOption: 4,
-    },
-    {
-      quizId: 4,
-      selectedOption: 2,
-    },
-  ];
+  const { quizzes } = useLessonFromPath();
 
   const reducer = (currentState, action) => {
     const [id, value] = action;

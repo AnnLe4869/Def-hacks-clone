@@ -9,8 +9,8 @@ import AppContext from "./context/AppContext";
 import Home from "./pages/home/Home";
 import About from "./pages/about/About";
 import Learn from "./pages/learn";
-// import Profile from "./pages/profile/ExistAccount";
 import Auth from "./pages/auth/index";
+import Profile from "./pages/profile/index";
 
 function App() {
   const context = useContext(AppContext);
@@ -22,7 +22,7 @@ function App() {
         <Route path="/about" exact component={About} />
         <Route path="/learn" component={Learn} />
         {user ? (
-          <Route path="/auth" component={Auth} />
+          <Route path="/profile" component={Profile} />
         ) : (
           <Route path="/auth" component={Auth} />
         )}
