@@ -1,10 +1,12 @@
 import { Button, Grid } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import useLessonFromPath from "../../../../../utils/useLessonFromPath";
 import QuizItem from "./QuizItem";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { CHOOSE_RADIO, CHECK_ANSWER } from "./constant";
+import { useHistory } from "react-router-dom";
+import AppContext from "../../../../../context/AppContext";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -26,12 +28,14 @@ const useStyles = makeStyles((theme) =>
   })
 );
 export default function Quiz() {
-  const { quizzes } = useLessonFromPath();
+  const currentLesson = useLessonFromPath();
   const classes = useStyles();
+  const history = useHistory();
+  const context = useContext(AppContext);
 
   // We add a selectedOption for the purpose of recording user choices
   // This only limited to the component level, not global context
-  const initialQuizzesState = quizzes
+  const initialQuizzesState = currentLesson.quizzes
     .map((quiz) => ({
       ...quiz,
       selectedOption: null,
@@ -54,7 +58,16 @@ export default function Quiz() {
     switch (action.type) {
       // User choose to check their answer
       case CHECK_ANSWER: {
-        return { ...currentState, isInChecking: true };
+        // If the attemptCount is still below the threshold
+        if (currentState.attemptCount < currentState.maxAttemptAllow) {
+          return { ...currentState, isInChecking: true };
+        }
+        // Otherwise change the shouldDisplayAnswer to show the explanation and correct answer
+        return {
+          ...currentState,
+          isInChecking: true,
+          shouldDisplayAnswer: true,
+        };
       }
 
       // User select a radio button
@@ -90,7 +103,17 @@ export default function Quiz() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleSubmit = () => {
+  const handleGoToNextLesson = () => {
+    const allLessons = context.lessons;
+    const nextLesson = allLessons.find(
+      (lesson) => lesson.no === currentLesson.no + 1
+    );
+    if (nextLesson) {
+      history.push("/");
+    }
+  };
+
+  const handleCheckAnswer = () => {
     dispatch({
       type: CHECK_ANSWER,
     });
@@ -103,6 +126,7 @@ export default function Quiz() {
           handleChange={dispatch}
           quiz={quiz}
           isInChecking={state.isInChecking}
+          shouldDisplayAnswer={state.shouldDisplayAnswer}
           key={quiz.id}
         />
       ))}
@@ -110,7 +134,7 @@ export default function Quiz() {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSubmit}
+          onClick={handleCheckAnswer}
           className={classes.checkAnswerButton}
         >
           Check your answers
@@ -118,7 +142,7 @@ export default function Quiz() {
         <Button
           variant="outlined"
           color="primary"
-          onClick={handleSubmit}
+          onClick={handleGoToNextLesson}
           className={classes.nextLessonButton}
         >
           Next lesson

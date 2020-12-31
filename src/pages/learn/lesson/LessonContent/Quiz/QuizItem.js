@@ -1,4 +1,4 @@
-import { Paper } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
@@ -14,12 +14,15 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(3),
       marginBottom: theme.spacing(3),
     },
+    explanation: {
+      fontStyle: "italic",
+    },
   })
 );
 
 export default function Quiz(props) {
   const classes = useStyles();
-  const { quiz, handleChange, isInChecking } = props;
+  const { quiz, handleChange, isInChecking, shouldDisplayAnswer } = props;
 
   const isAnswerCorrect = quiz.selectedOption === quiz.correctOption;
 
@@ -58,6 +61,11 @@ export default function Quiz(props) {
           />
         ))}
       </RadioGroup>
+      {shouldDisplayAnswer ? (
+        <Typography variant="subtitle1" className={classes.explanation}>
+          {quiz.explanation}
+        </Typography>
+      ) : null}
     </Paper>
   );
 }
