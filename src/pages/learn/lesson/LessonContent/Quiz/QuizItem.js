@@ -25,6 +25,9 @@ export default function Quiz(props) {
   const { quiz, handleChange, isInChecking, shouldDisplayAnswer } = props;
 
   const isAnswerCorrect = quiz.selectedOption === quiz.correctOption;
+  const correctAnswer = quiz.options.find(
+    (option) => option.id === quiz.correctOption
+  ).optionContent;
 
   const handleSelect = (event) => {
     handleChange({
@@ -61,6 +64,11 @@ export default function Quiz(props) {
           />
         ))}
       </RadioGroup>
+      {shouldDisplayAnswer && !isAnswerCorrect ? (
+        <Typography variant="subtitle1" className={classes.explanation}>
+          Answer: {correctAnswer}
+        </Typography>
+      ) : null}
       {shouldDisplayAnswer ? (
         <Typography variant="subtitle1" className={classes.explanation}>
           {quiz.explanation}

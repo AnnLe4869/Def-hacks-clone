@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 export default function Quiz() {
-  const currentLesson = useLessonFromPath();
+  const [currentLesson, courseId] = useLessonFromPath();
   const classes = useStyles();
   const history = useHistory();
   const context = useContext(AppContext);
@@ -60,7 +60,12 @@ export default function Quiz() {
       case CHECK_ANSWER: {
         // If the attemptCount is still below the threshold
         if (currentState.attemptCount < currentState.maxAttemptAllow) {
-          return { ...currentState, isInChecking: true };
+          return {
+            ...currentState,
+            isInChecking: true,
+            // Increment the attemptCount
+            attemptCount: currentState.attemptCount + 1,
+          };
         }
         // Otherwise change the shouldDisplayAnswer to show the explanation and correct answer
         return {
@@ -91,8 +96,6 @@ export default function Quiz() {
           quizzes: updatedQuizzesState,
           // We want to reset the isInChecking whenever user start select as to remove the UI effect of last checking
           isInChecking: false,
-          // Increment the attemptCount
-          attemptCount: currentState.attemptCount + 1,
         };
       }
 
@@ -104,12 +107,58 @@ export default function Quiz() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleGoToNextLesson = () => {
-    const allLessons = context.lessons;
+    const allCourses = context.courses;
+    // Get the current course
+    const currentCourse = allCourses.find((course) => course.id === courseId);
+    // This lessons list only has id, name and no
+    const allLessons = currentCourse.content;
+
+    // Find the next lesson base off no field
     const nextLesson = allLessons.find(
-      (lesson) => lesson.no === currentLesson.no + 1
+      (lesson) => lesson.no > currentLesson.no + 1
+      /**
+       * NOTE: this is the temporary solution based of current database
+       * In real production with real data we would want to do lesson.no === currentLesson.no + 1
+       * Reason is that in production mode, all lessons in a course has increment, continuous no number
+       * We mess up the dev database here, which lead to no number not increment of each other
+       * Although the above still work because we have sorted the course content when we fetch, but that not a guarantee
+       */
     );
+
     if (nextLesson) {
-      history.push("/");
+      history.push(`/learn/courses/${courseId}/lessons/${nextLesson.id}`);
+    } else {
+      // If there is no lesson left in the course
+
+      // Find the next course base off no field
+      const nextCourse = allCourses.find(
+        (course) => course.no === currentCourse.no + 1
+      );
+      // If this is the last course then do nothing
+      if (!nextCourse) return;
+
+      // Find the first lesson in course
+      /**
+       * This is the fix
+       */
+      const lessonNoArray = nextCourse.content.map((lesson) => lesson.no);
+      const smallestNo = Math.min.apply(Math, lessonNoArray);
+      /**
+       * End of the fix
+       */
+      const firstLessonInCourse = nextCourse.content.find(
+        (lesson) => lesson.no === smallestNo
+      );
+      /**
+       * NOTE: this is the temporary solution based of current database
+       * In real production with real data we would want to do (lesson) => lesson.no === 0
+       * Reason is that in production mode, there must be a lesson with no === 0
+       * We mess up the dev database here, which lead to no number not increment of each other
+       */
+
+      history.push(
+        `/learn/courses/${nextCourse.id}/lessons/${firstLessonInCourse.id}`
+      );
     }
   };
 
@@ -117,6 +166,11 @@ export default function Quiz() {
     dispatch({
       type: CHECK_ANSWER,
     });
+    // If this is the last allow attempt before displaying the answer
+    // NOTE: we do this because in callback we won't get the updated value of state but the old state value
+    if (state.attemptCount + 1 === state.maxAttemptAllow) {
+      context.completeLesson();
+    }
   };
 
   return (

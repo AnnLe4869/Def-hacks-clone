@@ -34,7 +34,7 @@ interface Context {
     {
       id: string;
       courseName: string;
-      content: [{ id: string; lessonName: string }];
+      content: [{ id: string; lessonName: string; no: number }];
       // Ordinal number, indicate the position in line of the course, as one course must followed by another specific course
       no: number;
     }

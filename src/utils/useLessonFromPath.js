@@ -10,5 +10,10 @@ export default function useLessonFromPath() {
     throw new Error("You use the hooks in wrong place ");
   }
 
-  return lessons.find((lesson) => lesson.id === match.params.lessonId);
+  // We return the found lesson, current courseId and lessonId
+  return [
+    lessons.find((lesson) => lesson.id === match.params.lessonId),
+    match.params.courseId,
+    match.params.lessonId,
+  ];
 }

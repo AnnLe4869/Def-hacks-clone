@@ -43,7 +43,7 @@ export default function LessonContent() {
   const context = useContext(AppContext);
 
   const { url, path, params } = useRouteMatch();
-  const lesson = useLessonFromPath();
+  const [lesson] = useLessonFromPath();
 
   useEffect(() => {
     // If we haven't fetch the lesson before, i.e it's not in context state

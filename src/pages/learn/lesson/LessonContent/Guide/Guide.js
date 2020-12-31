@@ -18,7 +18,7 @@ export default function Guide() {
   const history = useHistory();
   const { courseId, lessonId } = useParams();
 
-  const lesson = useLessonFromPath();
+  const [lesson] = useLessonFromPath();
 
   const goToQuiz = () => {
     history.push(`/learn/courses/${courseId}/lessons/${lessonId}/quiz`);
