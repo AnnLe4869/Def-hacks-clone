@@ -37,8 +37,6 @@ interface Lesson {
     code: string;
     test: string;
   };
-  // Ordinal number, indicate the position in line of the lesson, as one lesson must followed by another specific lesson
-  no: number;
   // Path to file to download
   files: string[];
 }

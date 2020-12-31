@@ -1,12 +1,12 @@
 import { Button, Grid } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
-import React, { useContext, useReducer, useState } from "react";
-import useLessonFromPath from "../../../../../utils/useLessonFromPath";
-import QuizItem from "./QuizItem";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { CHOOSE_RADIO, CHECK_ANSWER } from "./constant";
+import React, { useContext, useReducer } from "react";
 import { useHistory } from "react-router-dom";
 import AppContext from "../../../../../context/AppContext";
+import useLessonFromPath from "../../../../../utils/useLessonFromPath";
+import { CHECK_ANSWER, CHOOSE_RADIO } from "./constant";
+import QuizItem from "./QuizItem";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

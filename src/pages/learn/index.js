@@ -1,14 +1,11 @@
 import React, { useContext, useEffect } from "react";
-
+import { Redirect, Route, Switch } from "react-router-dom";
 import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/AppBarHeader";
-import Greeting from "./root/Greeting/Greeting";
-import CourseList from "./root/CourseList/CourseList";
-import Lesson from "./lesson/index";
-
-import { Redirect, Route, Switch } from "react-router-dom";
-
 import AppContext from "../../context/AppContext";
+import Lesson from "./lesson/index";
+import CourseList from "./root/CourseList/CourseList";
+import Greeting from "./root/Greeting/Greeting";
 
 export default function Learn() {
   const context = useContext(AppContext);

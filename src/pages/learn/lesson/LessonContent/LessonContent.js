@@ -9,8 +9,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { grey } from "@material-ui/core/colors";
 
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import Quiz from "./Quiz/QuizList";
-import Guide from "./Guide/Guide";
+import Quiz from "./quiz/QuizList";
+import Guide from "./guide/Guide";
 
 import React, { useContext, useEffect } from "react";
 import AppContext from "../../../../context/AppContext";
