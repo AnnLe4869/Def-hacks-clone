@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) =>
 export default function Quiz(props) {
   const classes = useStyles();
 
-  console.log(props.quiz);
-
   const handleChange = (event) => {
     props.handleChange([event.target.name, event.target.value]);
   };

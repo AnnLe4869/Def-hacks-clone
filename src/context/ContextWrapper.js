@@ -77,8 +77,6 @@ export default function ContextWrapper(props) {
       const lessonRef = db.collection("lesson").doc(lessonId);
       const lessonData = (await lessonRef.get()).data();
 
-      console.log(lessonData);
-
       // Push the lesson into the lessons state variable
       setLessons([...lessons, { id: lessonId, ...lessonData }]);
 

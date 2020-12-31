@@ -9,10 +9,12 @@ export default function Quiz() {
 
   // We add a selectedOption for the purpose of recording user choices
   // This only limited to the component level, not global context
-  const initialState = quizzes.map((quiz) => ({
-    ...quiz,
-    selectedOption: null,
-  }));
+  const initialState = quizzes
+    .map((quiz) => ({
+      ...quiz,
+      selectedOption: null,
+    }))
+    .sort((a, b) => a.no - b.no);
 
   const reducer = (currentState, action) => {
     const [quizId, selectedOption] = action;
@@ -27,8 +29,7 @@ export default function Quiz() {
         selectedOption,
       },
     ];
-    // console.log(updatedState);
-    return updatedState;
+    return updatedState.sort((a, b) => a.no - b.no);
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
