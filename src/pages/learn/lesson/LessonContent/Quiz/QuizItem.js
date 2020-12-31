@@ -1,36 +1,55 @@
+import { Paper } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import React, { useState } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
+import React from "react";
+import { CHOOSE_RADIO } from "./constant";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      width: "100%",
+      padding: theme.spacing(3),
+      marginBottom: theme.spacing(3),
     },
   })
 );
 
 export default function Quiz(props) {
   const classes = useStyles();
+  const { quiz, handleChange, isInChecking } = props;
 
-  const handleChange = (event) => {
-    props.handleChange([event.target.name, event.target.value]);
+  const isAnswerCorrect = quiz.selectedOption === quiz.correctOption;
+
+  const handleSelect = (event) => {
+    handleChange({
+      type: CHOOSE_RADIO,
+      payload: [event.target.name, event.target.value],
+    });
   };
 
   return (
-    <>
-      <FormLabel component="h5">Gender</FormLabel>
+    <Paper
+      variant="outlined"
+      className={classes.root}
+      style={{
+        border: isInChecking
+          ? isAnswerCorrect
+            ? "1px solid green"
+            : "1px solid red"
+          : null,
+      }}
+    >
+      <FormLabel component="h5">{quiz.question}</FormLabel>
       <RadioGroup
         aria-label="gender"
-        name={props.quiz.id}
-        value={props.quiz.selectedOption}
-        onChange={handleChange}
+        name={quiz.id}
+        value={quiz.selectedOption}
+        onChange={handleSelect}
       >
-        {props.quiz.options.map((option) => (
+        {quiz.options.map((option) => (
           <FormControlLabel
             key={option.id}
             value={option.id}
@@ -39,6 +58,6 @@ export default function Quiz(props) {
           />
         ))}
       </RadioGroup>
-    </>
+    </Paper>
   );
 }
