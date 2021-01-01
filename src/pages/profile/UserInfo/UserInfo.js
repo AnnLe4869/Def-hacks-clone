@@ -77,7 +77,15 @@ export default function UserInfo() {
             variant="square"
             src={user.photoUrl || imagePlaceholder}
             className={classes.avatarImage}
-          />
+          >
+            {/* If the image link is broken, fall back to default image */}
+            <Avatar
+              alt={user.displayName}
+              variant="square"
+              src={imagePlaceholder}
+              className={classes.avatarImage}
+            />
+          </Avatar>
         </Grid>
 
         <Grid item sm={12} md={12} lg={9} className={classes.columnRight}>

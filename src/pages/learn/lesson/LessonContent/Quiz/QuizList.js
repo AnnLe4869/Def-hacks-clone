@@ -58,8 +58,17 @@ export default function Quiz() {
     switch (action.type) {
       // User choose to check their answer
       case CHECK_ANSWER: {
-        // If the attemptCount is still below the threshold
-        if (currentState.attemptCount < currentState.maxAttemptAllow) {
+        // Check whether all answers are correct
+        // We do so by first find a quiz that has selectedOption !== correctOption
+        const incorrectQuiz = currentState.quizzes.find(
+          (quiz) => !(quiz.selectedOption === quiz.correctOption)
+        );
+
+        // If the attemptCount is still below the threshold and there are incorrect quiz
+        if (
+          currentState.attemptCount < currentState.maxAttemptAllow &&
+          incorrectQuiz
+        ) {
           return {
             ...currentState,
             isInChecking: true,
@@ -168,9 +177,15 @@ export default function Quiz() {
     dispatch({
       type: CHECK_ANSWER,
     });
-    // If this is the last allow attempt before displaying the answer
+
+    // Check whether all answers are correct
+    // We do so by first find a quiz that has selectedOption !== correctOption
+    const incorrectQuiz = state.quizzes.find(
+      (quiz) => !(quiz.selectedOption === quiz.correctOption)
+    );
+    // If this is the last allow attempt before displaying the answer or all answers are correct
     // NOTE: we do this because in callback we won't get the updated value of state but the old state value
-    if (state.attemptCount + 1 === state.maxAttemptAllow) {
+    if (state.attemptCount + 1 === state.maxAttemptAllow || !incorrectQuiz) {
       context.completeLesson(lessonId);
     }
   };

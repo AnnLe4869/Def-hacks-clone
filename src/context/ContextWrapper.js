@@ -45,8 +45,6 @@ export default function ContextWrapper(props) {
         const userData = (
           await db.collection("user").doc(authenticatedUser.uid).get()
         ).data();
-
-        console.log(userData);
         setUserProgress(userData.progress);
         setLastLesson(userData.lastLesson);
       }
@@ -127,15 +125,15 @@ export default function ContextWrapper(props) {
             ];
             // Update in firestore
             transaction.update(userRef, { progress: updatedProgress });
-
-            // Set the userProgress context variable
-            setUserProgress(updatedUserProgress);
             return updatedProgress;
           } catch (err) {
-            console.error(err);
+            throw err;
           }
         }
       );
+
+      // Set the userProgress context variable if the progress actually get updated (i.e course hasn't been complete before)
+      if (updatedUserProgress) setUserProgress(updatedUserProgress);
     } catch (err) {
       console.error(err);
     }
