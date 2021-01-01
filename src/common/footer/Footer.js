@@ -14,17 +14,42 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     color: "white",
     marginTop: "20vh",
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
     paddingTop: theme.spacing(4),
-    paddingLeft: theme.spacing(5),
     paddingBottom: theme.spacing(4),
+
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: theme.spacing(5),
+    },
+  },
+
+  container: {
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "center",
+    },
   },
 
   leftColumn: {
     paddingLeft: theme.spacing(5),
+    marginBottom: theme.spacing(5),
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+      paddingLeft: 0,
+      paddingBottom: theme.spacing(3),
+    },
+  },
+
+  rightColumn: {
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+    },
   },
 
   columnTitle: {
-    marginBottom: theme.spacing(3),
+    [theme.breakpoints.up("sm")]: {
+      marginBottom: theme.spacing(3),
+    },
   },
 
   externalLink: {
@@ -36,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: "white",
       textDecoration: "underline white",
+    },
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "center",
     },
   },
 
@@ -68,12 +96,13 @@ function Footer() {
         <Grid
           container
           item
-          xs={4}
-          md={4}
+          sm={12}
+          lg={4}
           justify="center"
           alignItems="flex-start"
+          className={classes.rightColumn}
         >
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Typography variant="h4" className={classes.columnTitle}>
               Contact Us
             </Typography>
@@ -115,7 +144,7 @@ function Footer() {
             </Typography>
           </Grid>
 
-          <Grid item xs={6} md={6}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Typography variant="h4" className={classes.columnTitle}>
               Navigate
             </Typography>
