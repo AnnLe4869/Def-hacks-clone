@@ -98,14 +98,14 @@ export default function UserInfo() {
               Detail info
             </Typography>
 
-            <Typography className={classes.detailInfo}>
+            <div className={classes.detailInfo}>
               <Typography variant="h6">Username: {user.displayName}</Typography>
               <EditIcon className={classes.editIcon} />
-            </Typography>
-            <Typography className={classes.detailInfo}>
+            </div>
+            <div className={classes.detailInfo}>
               <Typography variant="h6">Email: {user.email} </Typography>
               <EditIcon className={classes.editIcon} />
-            </Typography>
+            </div>
           </Paper>
         </Grid>
       </Grid>
