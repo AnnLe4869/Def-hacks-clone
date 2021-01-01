@@ -1,6 +1,13 @@
 import React, { useContext } from "react";
 
-import { Grid, Container, Avatar, Typography, Paper } from "@material-ui/core";
+import {
+  Grid,
+  Container,
+  Avatar,
+  Typography,
+  Paper,
+  Button,
+} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 
 import { createStyles, makeStyles } from "@material-ui/core/styles";
@@ -109,6 +116,9 @@ export default function UserInfo() {
           </Paper>
         </Grid>
       </Grid>
+      <Button variant="contained" color="secondary" fullWidth>
+        Sign me out
+      </Button>
     </Container>
   );
 }

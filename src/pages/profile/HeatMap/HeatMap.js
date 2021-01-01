@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import ReactTooltip from "react-tooltip";
 
 import CalendarHeatMap from "./CalendarHeatMapPkg/index";
@@ -42,7 +42,7 @@ export default function HeatMap() {
     }
     // Configuration for react-tooltip
     return {
-      "data-tip": `${value.count} lessons done on ${value.date}`,
+      "data-tip": `${value.count} lessons on ${value.date}`,
     };
   };
 
@@ -58,7 +58,7 @@ export default function HeatMap() {
         }}
         tooltipDataAttrs={getTooltipDataAttrs}
       />
-      <ReactTooltip />
+      <ReactTooltip border backgroundColor="white" textColor="black" />
     </Container>
   );
 }
