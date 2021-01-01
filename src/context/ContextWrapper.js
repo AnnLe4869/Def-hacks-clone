@@ -33,7 +33,6 @@ export default function ContextWrapper(props) {
       if (additionalUserInfo && additionalUserInfo.isNewUser) {
         // If it is, create the blank userProgress and lastLesson
         await db.collection("user").doc(authenticatedUser.uid).set({
-          displayName: authenticatedUser.displayName,
           email: authenticatedUser.email,
           progress: [],
           lastLesson: "",
@@ -149,6 +148,37 @@ export default function ContextWrapper(props) {
     }
   };
 
+  const updateUserProfile = async (
+    displayName = null,
+    photoURL = null,
+    email = null
+  ) => {
+    const user = firebase.auth().currentUser;
+
+    try {
+      // If user provide an email for update, do so
+      if (email) {
+        await user.updateEmail(email);
+      }
+      // If user provide displayName or photoURL for updating, do so
+      // Otherwise keep the same
+      if (displayName || photoURL) {
+        await user.updateProfile({
+          displayName: displayName ? displayName : user.displayName,
+          photoURL: photoURL ? photoURL : user.photoURL,
+        });
+
+        setUser({
+          ...user,
+          displayName: displayName ? displayName : user.displayName,
+          photoURL: photoURL ? photoURL : user.photoURL,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -165,6 +195,7 @@ export default function ContextWrapper(props) {
         startLesson,
         completeLesson,
         setAlert,
+        updateUserProfile,
       }}
     >
       {props.children}

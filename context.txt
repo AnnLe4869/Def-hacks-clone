@@ -5,7 +5,6 @@ interface Context {
 
   // This one use the firebase.auth().currentUser and below are the minimal requirement
   user: {
-    displayName: string;
     email: string;
   };
 
@@ -88,6 +87,8 @@ interface Context {
   completeLesson: (lessonId: string) => void;
   // Set the alert type and message
   setAlert: (type: ErrorAlert | SuccessAlert, message: string) => void;
+  // Update the user profile on firestore and local Context
+  updateUserProfile: (displayName: string | null, photoURL: string | null, email: string | null) => void
 }
 
 type ErrorAlert = string;

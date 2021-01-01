@@ -1,6 +1,5 @@
 interface User {
   id: User_ID;
-  displayName: string;
   email: string;
   progress: [
     {

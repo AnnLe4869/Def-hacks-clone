@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Grid,
@@ -15,6 +15,7 @@ import firebase from "firebase";
 
 import AppContext from "../../../context/AppContext";
 import imagePlaceholder from "./profile_placeholder.png";
+import ChangeNameDialog from "./Dialog/ChangeNameDialog";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -72,6 +73,9 @@ export default function UserInfo() {
   const classes = useStyles();
   const { user } = useContext(AppContext);
 
+  const [changeNameDialogOpen, setChangeNameDialogOpen] = useState(false);
+  const [changeEmailDialogOpen, setChangeEmailDialogOpen] = useState(false);
+
   const handleSignOut = () => {
     firebase.auth().signOut();
     window.location.reload();
@@ -113,11 +117,17 @@ export default function UserInfo() {
 
             <div className={classes.detailInfo}>
               <Typography variant="h6">Username: {user.displayName}</Typography>
-              <EditIcon className={classes.editIcon} />
+              <EditIcon
+                className={classes.editIcon}
+                onClick={() => setChangeNameDialogOpen(true)}
+              />
             </div>
             <div className={classes.detailInfo}>
               <Typography variant="h6">Email: {user.email} </Typography>
-              <EditIcon className={classes.editIcon} />
+              <EditIcon
+                className={classes.editIcon}
+                onClick={() => setChangeEmailDialogOpen(true)}
+              />
             </div>
           </Paper>
         </Grid>
@@ -130,6 +140,11 @@ export default function UserInfo() {
       >
         Sign me out
       </Button>
+
+      <ChangeNameDialog
+        isOpen={changeNameDialogOpen}
+        closeDialog={() => setChangeNameDialogOpen(false)}
+      />
     </Container>
   );
 }
