@@ -15,6 +15,7 @@ export default function ContextWrapper(props) {
     // Start this callback which will run whenever user change or user login/logout
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         setUser({ ...user, id: user.uid });
         initializeUserData(user);
       } else {
@@ -159,6 +160,10 @@ export default function ContextWrapper(props) {
       // If user provide an email for update, do so
       if (email) {
         await user.updateEmail(email);
+        setUser({
+          ...user,
+          email,
+        });
       }
       // If user provide displayName or photoURL for updating, do so
       // Otherwise keep the same

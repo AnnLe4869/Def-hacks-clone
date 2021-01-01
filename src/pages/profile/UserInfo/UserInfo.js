@@ -16,6 +16,7 @@ import firebase from "firebase";
 import AppContext from "../../../context/AppContext";
 import imagePlaceholder from "./profile_placeholder.png";
 import ChangeNameDialog from "./Dialog/ChangeNameDialog";
+import ChangeEmailDialog from "./Dialog/ChangeEmailDialog";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -144,6 +145,11 @@ export default function UserInfo() {
       <ChangeNameDialog
         isOpen={changeNameDialogOpen}
         closeDialog={() => setChangeNameDialogOpen(false)}
+      />
+
+      <ChangeEmailDialog
+        isOpen={changeEmailDialogOpen}
+        closeDialog={() => setChangeEmailDialogOpen(false)}
       />
     </Container>
   );
