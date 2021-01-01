@@ -28,35 +28,40 @@ const useStyles = makeStyles((theme) =>
 export default function LessonItem(props) {
   const classes = useStyles();
   const history = useHistory();
-  const { lesson } = props;
+  const { lesson: simplifiedLesson } = props;
   const context = useContext(AppContext);
   // This is the ID of the selected lesson we are viewing
   const { lessonId, courseId } = useParams();
 
   // Check if user has complete this lesson
-  const isUserCompleteThisLesson = context.userProgress.includes(
-    (lesson) => lesson.id === props.lesson.id
+  const isUserCompleteThisLesson = context.userProgress.find(
+    (lesson) => lesson.id === simplifiedLesson.id
   );
 
   const handleClick = () => {
     // We change the url to our wanted lesson, thus make it open
-    history.push(`/learn/courses/${courseId}/lessons/${lesson.id}`);
+    history.push(`/learn/courses/${courseId}/lessons/${simplifiedLesson.id}`);
   };
 
   return (
     <div>
       <ListItem button onClick={handleClick} className={classes.course}>
         <ListItemIcon>
-          <DoneIcon
-            style={{
-              color: green[500],
-              display: isUserCompleteThisLesson ? "inherit" : "none",
-            }}
-          />
+          {isUserCompleteThisLesson ? (
+            <DoneIcon
+              style={{
+                color: green[500],
+              }}
+            />
+          ) : null}
         </ListItemIcon>
-        <ListItemText primary={lesson.lessonName} />
+        <ListItemText primary={simplifiedLesson.lessonName} />
       </ListItem>
-      <Collapse in={lessonId === lesson.id} timeout="auto" unmountOnExit>
+      <Collapse
+        in={lessonId === simplifiedLesson.id}
+        timeout="auto"
+        unmountOnExit
+      >
         <div className={classes.lessonList}>
           <List component="div" disablePadding>
             <ListItem>Practice</ListItem>

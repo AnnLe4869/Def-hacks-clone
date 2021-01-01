@@ -41,7 +41,7 @@ export default function LessonList() {
   const classes = useStyles();
   const history = useHistory();
 
-  const course = useCourseFromPath();
+  const [course] = useCourseFromPath();
 
   if (!course) return <div>Loading</div>;
 
@@ -65,8 +65,8 @@ export default function LessonList() {
       {/* Course lesson list */}
       <div className={classes.list}>
         <List component="nav" style={{ padding: 0 }}>
-          {course.content.map((lesson) => (
-            <LessonItem key={lesson.id} lesson={lesson} />
+          {course.content.map((simplifiedLesson) => (
+            <LessonItem key={simplifiedLesson.id} lesson={simplifiedLesson} />
           ))}
         </List>
       </div>

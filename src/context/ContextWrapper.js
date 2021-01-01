@@ -16,17 +16,21 @@ export default function ContextWrapper(props) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser({ ...user, id: user.uid });
+        initializeUserData(user);
       } else {
         setUser(null);
       }
     });
   }, []);
 
-  const initializeUserData = async (authenticatedUser, additionalUserInfo) => {
+  const initializeUserData = async (
+    authenticatedUser,
+    additionalUserInfo = null
+  ) => {
     try {
       const db = firebase.firestore();
       // Check if user is signed in for the first time
-      if (additionalUserInfo.isNewUser) {
+      if (additionalUserInfo && additionalUserInfo.isNewUser) {
         // If it is, create the blank userProgress and lastLesson
         await db.collection("user").doc(authenticatedUser.uid).set({
           displayName: authenticatedUser.displayName,
@@ -39,8 +43,10 @@ export default function ContextWrapper(props) {
       } else {
         // Get user data
         const userData = (
-          await db.collection("user").get(authenticatedUser.uid)
+          await db.collection("user").doc(authenticatedUser.uid).get()
         ).data();
+
+        console.log(userData);
         setUserProgress(userData.progress);
         setLastLesson(userData.lastLesson);
       }
@@ -98,22 +104,38 @@ export default function ContextWrapper(props) {
           try {
             // Get the old progress data from user document
             const { progress } = (await transaction.get(userRef)).data();
+
+            // Check to see if the lesson already completed before
+            const completedLessonFound = progress.find(
+              (simplifiedLesson) => simplifiedLesson.id === lessonId
+            );
+            // If it's already completed, do nothing
+            if (completedLessonFound) return;
+
+            // Otherwise,
             // Create an updated version of the progress
+            const completeLesson = {
+              id: lessonId,
+              dateComplete: new Date(),
+            };
+            // Add the lesson to the progress field on /user
             const updatedProgress = [
-              ...progress,
-              { lessonId, date_complete: new Date() },
+              ...progress.filter(
+                (simplifiedLesson) => simplifiedLesson.id !== lessonId
+              ),
+              completeLesson,
             ];
             // Update in firestore
             transaction.update(userRef, { progress: updatedProgress });
+
+            // Set the userProgress context variable
+            setUserProgress(updatedUserProgress);
             return updatedProgress;
           } catch (err) {
             console.error(err);
           }
         }
       );
-
-      // Set the userProgress context variable
-      setUserProgress(updatedUserProgress);
     } catch (err) {
       console.error(err);
     }

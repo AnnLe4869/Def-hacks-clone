@@ -10,5 +10,9 @@ export default function useCourseFromPath() {
     throw new Error("You use the hooks in wrong place ");
   }
 
-  return courses.find((course) => course.id === match.params.courseId);
+  return [
+    courses.find((course) => course.id === match.params.courseId),
+    match.params.courseId,
+    match.params.lessonId,
+  ];
 }

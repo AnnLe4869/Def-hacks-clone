@@ -32,7 +32,7 @@ export default function CourseItem(props) {
     <ListItem button className={classes.nested} onClick={goToLesson}>
       <ListItemIcon>
         <Radio
-          checked={context.userProgress.includes(
+          checked={context.userProgress.find(
             (doneLesson) => doneLesson.id === lesson.id
           )}
         />

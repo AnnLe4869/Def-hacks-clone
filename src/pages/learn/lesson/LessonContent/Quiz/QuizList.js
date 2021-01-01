@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 export default function Quiz() {
-  const [currentLesson, courseId] = useLessonFromPath();
+  const [currentLesson, courseId, lessonId] = useLessonFromPath();
   const classes = useStyles();
   const history = useHistory();
   const context = useContext(AppContext);
@@ -111,10 +111,10 @@ export default function Quiz() {
     // Get the current course
     const currentCourse = allCourses.find((course) => course.id === courseId);
     // This lessons list only has id, name and no
-    const allLessons = currentCourse.content;
+    const allSimplifiedLessons = currentCourse.content;
 
     // Find the next lesson base off no field
-    const nextLesson = allLessons.find(
+    const nextSimplifiedLessons = allSimplifiedLessons.find(
       (lesson) => lesson.no > currentLesson.no + 1
       /**
        * NOTE: this is the temporary solution based of current database
@@ -125,8 +125,10 @@ export default function Quiz() {
        */
     );
 
-    if (nextLesson) {
-      history.push(`/learn/courses/${courseId}/lessons/${nextLesson.id}`);
+    if (nextSimplifiedLessons) {
+      history.push(
+        `/learn/courses/${courseId}/lessons/${nextSimplifiedLessons.id}`
+      );
     } else {
       // If there is no lesson left in the course
 
@@ -169,7 +171,7 @@ export default function Quiz() {
     // If this is the last allow attempt before displaying the answer
     // NOTE: we do this because in callback we won't get the updated value of state but the old state value
     if (state.attemptCount + 1 === state.maxAttemptAllow) {
-      context.completeLesson();
+      context.completeLesson(lessonId);
     }
   };
 
