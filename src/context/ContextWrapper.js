@@ -45,7 +45,14 @@ export default function ContextWrapper(props) {
         const userData = (
           await db.collection("user").doc(authenticatedUser.uid).get()
         ).data();
-        setUserProgress(userData.progress);
+
+        // We need this step date format from firebase is a Firebase.FireField and not normal Date object
+        const normalizesUserProgress = userData.progress.map((lesson) => ({
+          ...lesson,
+          dateComplete: lesson.dateComplete.toDate(),
+        }));
+
+        setUserProgress(normalizesUserProgress);
         setLastLesson(userData.lastLesson);
       }
     } catch (err) {
@@ -118,9 +125,12 @@ export default function ContextWrapper(props) {
             };
             // Add the lesson to the progress field on /user
             const updatedProgress = [
-              ...progress.filter(
-                (simplifiedLesson) => simplifiedLesson.id !== lessonId
-              ),
+              ...progress
+                .filter((simplifiedLesson) => simplifiedLesson.id !== lessonId)
+                .map((simplifiedLesson) => ({
+                  ...simplifiedLesson,
+                  dateComplete: simplifiedLesson.dateComplete.toDate(),
+                })),
               completeLesson,
             ];
             // Update in firestore

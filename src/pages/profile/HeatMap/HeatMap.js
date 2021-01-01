@@ -14,10 +14,10 @@ export default function HeatMap() {
   // The result object has the form of { [date] : [count] }
   // For example: {'2020-12-25':5, '2020-12-31':10}
   const dateCountObjectForm = userProgress.reduce((allDays, currentDay) => {
-    if (currentDay.dateComplete.toDate().toLocaleDateString() in allDays) {
-      allDays[currentDay.dateComplete.toDate().toLocaleDateString()] += 1;
+    if (currentDay.dateComplete.toLocaleDateString() in allDays) {
+      allDays[currentDay.dateComplete.toLocaleDateString()] += 1;
     } else {
-      allDays[currentDay.dateComplete.toDate().toLocaleDateString()] = 1;
+      allDays[currentDay.dateComplete.toLocaleDateString()] = 1;
     }
 
     return allDays;

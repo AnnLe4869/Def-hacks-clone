@@ -39,18 +39,24 @@ export default function StreakScore() {
 const findLongestStreak = (progress) => {
   // Get only the days, filter the duplicate and and sort them in order
   const days = progress
-    .map((lesson) => lesson.dateComplete.toDate().toLocaleDateString())
+    .map((lesson) => lesson.dateComplete.toLocaleDateString())
     .filter((item, index, inputArray) => inputArray.indexOf(item) === index)
-    .sort();
+    .sort()
+    .map((day) => new Date(day));
 
-  let count = 0;
+  let count = 1;
   let longestStreak = 1;
+  const numberOfDays = days.length;
+  // Placeholder
+  let temp = new Date();
 
-  days.forEach((_, index) => {
-    if (
-      days[index] === days[index - 1] + 1 ||
-      days[index] === days[index - 1]
-    ) {
+  // We start from the latest day, which is the first item in the list
+  for (let index = 1; index < numberOfDays; index++) {
+    // Then move down the array, if the next item is the previous day then increment the count
+    temp = new Date(days[index]);
+    temp.setDate(temp.getDate() + 1);
+
+    if (days[index - 1].toLocaleDateString() === temp.toLocaleDateString()) {
       count++;
     } else {
       count = 0;
@@ -58,7 +64,7 @@ const findLongestStreak = (progress) => {
 
     // Update the longest streak
     longestStreak = Math.max(longestStreak, count);
-  });
+  }
 
   return longestStreak;
 };
@@ -66,7 +72,7 @@ const findLongestStreak = (progress) => {
 const findCurrentStreak = (progress) => {
   // Get only the days, filter the duplicate, and sort them in order and convert them back to UTC timestamp
   const days = progress
-    .map((lesson) => lesson.dateComplete.toDate().toLocaleDateString())
+    .map((lesson) => lesson.dateComplete.toLocaleDateString())
     .filter((item, index, inputArray) => inputArray.indexOf(item) === index)
     .sort()
     .map((day) => new Date(day));
@@ -75,10 +81,16 @@ const findCurrentStreak = (progress) => {
   let count = 1;
 
   if (numberOfDays < 2) return count;
+  // Placeholder
+  let temp = new Date();
+
   // We start from the latest day, which is the first item in the list
-  for (let index = 0; index < numberOfDays; index++) {
+  for (let index = 1; index < numberOfDays; index++) {
     // Then move down the array, if the next item is the previous day then increment the count
-    if (days[index].getDate() === days[index - 1].getDate() - 1) {
+    temp = new Date(days[index]);
+    temp.setDate(temp.getDate() + 1);
+
+    if (days[index - 1].toLocaleDateString() === temp.toLocaleDateString()) {
       count++;
     } else {
       // Otherwise stop the loop
