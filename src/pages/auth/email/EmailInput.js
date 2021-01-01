@@ -7,6 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import React, { useState } from "react";
 import emailValidate from "../../../utils/emailValidate";
+import firebase from "firebase";
+
+const actionCodeSettings = {
+  url: "https://localhost:3000/auth/email/verification",
+  // This must be true.
+  handleCodeInApp: true,
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,13 +39,24 @@ export default function EmailInput() {
   const classes = useStyles();
   const [email, setEmail] = useState();
 
+  const [isEmailSent, setIsEmailSent] = useState(false);
+
   const handleChange = (event) => {
     setEmail(event.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
+    firebase
+      .auth()
+      .sendSignInLinkToEmail(email, actionCodeSettings)
+      .then(() => {
+        window.localStorage.setItem("emailForSignIn", email);
+        setIsEmailSent(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -63,6 +81,7 @@ export default function EmailInput() {
             autoFocus
             value={email}
             onChange={handleChange}
+            disabled={isEmailSent}
           />
 
           <Button
@@ -73,7 +92,7 @@ export default function EmailInput() {
             size="large"
             className={classes.submit}
             onClick={handleSubmit}
-            disabled={!emailValidate(email)}
+            disabled={!emailValidate(email) || isEmailSent}
           >
             Send a verification link
           </Button>

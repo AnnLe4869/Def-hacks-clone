@@ -11,6 +11,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import firebase from "firebase";
 
 import AppContext from "../../../context/AppContext";
 import imagePlaceholder from "./profile_placeholder.png";
@@ -71,6 +72,11 @@ export default function UserInfo() {
   const classes = useStyles();
   const { user } = useContext(AppContext);
 
+  const handleSignOut = () => {
+    firebase.auth().signOut();
+    window.location.reload();
+  };
+
   return (
     <Container className={classes.root}>
       <Typography align="left" variant="h2" gutterBottom>
@@ -116,7 +122,12 @@ export default function UserInfo() {
           </Paper>
         </Grid>
       </Grid>
-      <Button variant="contained" color="secondary" fullWidth>
+      <Button
+        variant="contained"
+        color="secondary"
+        fullWidth
+        onClick={handleSignOut}
+      >
         Sign me out
       </Button>
     </Container>
