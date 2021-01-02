@@ -121,25 +121,22 @@ export default function Quiz() {
     const currentCourse = allCourses.find((course) => course.id === courseId);
     // This lessons list only has id, name and no
     const allSimplifiedLessons = currentCourse.content;
-
-    // Find the next lesson base off no field
-    const nextSimplifiedLessons = allSimplifiedLessons.find(
-      (lesson) => lesson.no > currentLesson.no + 1
-      /**
-       * NOTE: this is the temporary solution based of current database
-       * In real production with real data we would want to do lesson.no === currentLesson.no + 1
-       * Reason is that in production mode, all lessons in a course has increment, continuous no number
-       * We mess up the dev database here, which lead to no number not increment of each other
-       * Although the above still work because we have sorted the course content when we fetch, but that not a guarantee
-       */
+    // Find the current lesson
+    const currentSimplifiedLesson = allSimplifiedLessons.find(
+      (simplifiedLesson) => simplifiedLesson.id === lessonId
     );
 
-    if (nextSimplifiedLessons) {
+    // * Find the next lesson base off no field
+    const nextSimplifiedLesson = allSimplifiedLessons.find(
+      (lesson) => lesson.no === currentSimplifiedLesson.no + 1
+    );
+
+    if (nextSimplifiedLesson) {
       history.push(
-        `/learn/courses/${courseId}/lessons/${nextSimplifiedLessons.id}`
+        `/learn/courses/${courseId}/lessons/${nextSimplifiedLesson.id}`
       );
     } else {
-      // If there is no lesson left in the course
+      // * If there is no lesson left in the course
 
       // Find the next course base off no field
       const nextCourse = allCourses.find(
@@ -148,17 +145,8 @@ export default function Quiz() {
       // If this is the last course then do nothing
       if (!nextCourse) return;
 
-      // Find the first lesson in course
-      /**
-       * This is the fix
-       */
-      const lessonNoArray = nextCourse.content.map((lesson) => lesson.no);
-      const smallestNo = Math.min.apply(Math, lessonNoArray);
-      /**
-       * End of the fix
-       */
-      const firstLessonInCourse = nextCourse.content.find(
-        (lesson) => lesson.no === smallestNo
+      const firstSimplifiedLessonInCourse = nextCourse.content.find(
+        (lesson) => lesson.no === 0
       );
       /**
        * NOTE: this is the temporary solution based of current database
@@ -168,7 +156,7 @@ export default function Quiz() {
        */
 
       history.push(
-        `/learn/courses/${nextCourse.id}/lessons/${firstLessonInCourse.id}`
+        `/learn/courses/${nextCourse.id}/lessons/${firstSimplifiedLessonInCourse.id}`
       );
     }
   };
