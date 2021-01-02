@@ -212,6 +212,18 @@ export default function ContextWrapper(props) {
     }
   };
 
+  const updateLastLesson = async (lessonId) => {
+    try {
+      const db = firebase.firestore();
+
+      await db.collection("user").doc(user.id).update({
+        lastLesson: lessonId,
+      });
+
+      setLastLesson(lessonId);
+    } catch (error) {}
+  };
+
   return (
     <AppContext.Provider
       value={{
