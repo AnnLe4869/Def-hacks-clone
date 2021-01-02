@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import DOMPurify from "dompurify";
-import useLessonFromPath from "../../../../../utils/useLessonFromPath";
 import { Button } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { useHistory, useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import useLessonFromPath from "../../../../../utils/useLessonFromPath";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -16,9 +16,8 @@ const useStyles = makeStyles((theme) =>
 export default function Guide() {
   const classes = useStyles();
   const history = useHistory();
-  const { courseId, lessonId } = useParams();
 
-  const [lesson] = useLessonFromPath();
+  const [lesson, courseId, lessonId] = useLessonFromPath();
 
   const goToQuiz = () => {
     history.push(`/learn/courses/${courseId}/lessons/${lessonId}/quiz`);

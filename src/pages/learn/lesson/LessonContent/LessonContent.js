@@ -49,6 +49,20 @@ export default function LessonContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId]);
 
+  useEffect(() => {
+    const handleUpdateLastLesson = () => {
+      context.updateLastLesson(lessonId);
+    };
+
+    // We want the function only run when user has stay in the page  for longer than 10 seconds
+    const timer = setTimeout(handleUpdateLastLesson, 1000 * 10);
+    // If user leave early clear the timer and thus, stop the function from starting
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonId]);
+
   if (!lesson) return <div>Loading</div>;
 
   return (

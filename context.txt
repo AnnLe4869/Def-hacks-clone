@@ -93,6 +93,8 @@ interface Context {
   updateNonCriticalUserProfile: (displayName: string | null, photoURL: string | null) => void
   // Update the email and such that require re-authenticate on firestore and local Context
   updateCriticalUserProfile: (email: string | null) => void
+  // Update last lesson, which we define to be the last lesson that user stay in for longer than 10 seconds
+  updateLastLesson: (lessonId: string) => void
 }
 
 type ErrorAlert = string;

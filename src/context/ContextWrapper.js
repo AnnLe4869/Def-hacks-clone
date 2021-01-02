@@ -242,6 +242,7 @@ export default function ContextWrapper(props) {
         setAlert,
         updateCriticalUserProfile,
         updateNonCriticalUserProfile,
+        updateLastLesson,
       }}
     >
       {props.children}
