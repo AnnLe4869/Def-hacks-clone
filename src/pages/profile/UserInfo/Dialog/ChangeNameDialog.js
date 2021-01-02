@@ -21,7 +21,7 @@ export default function ChangeNameDialog(props) {
   };
 
   const submitNameChange = () => {
-    context.updateUserProfile(name);
+    context.updateNonCriticalUserProfile(name);
     setName();
     closeDialog();
   };

@@ -93,7 +93,7 @@ export default function UserInfo() {
           <Avatar
             alt={user.displayName}
             variant="square"
-            src={user.photoUrl || imagePlaceholder}
+            src={user.photoURL || imagePlaceholder}
             className={classes.avatarImage}
           >
             {/* If the image link is broken, fall back to default image */}

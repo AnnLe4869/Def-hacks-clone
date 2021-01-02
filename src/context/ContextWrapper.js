@@ -15,7 +15,6 @@ export default function ContextWrapper(props) {
     // Start this callback which will run whenever user change or user login/logout
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         setUser({ ...user, id: user.uid });
         initializeUserData(user);
       } else {
@@ -149,22 +148,15 @@ export default function ContextWrapper(props) {
     }
   };
 
-  const updateUserProfile = async (
+  const updateNonCriticalUserProfile = async (
     displayName = null,
-    photoURL = null,
-    email = null
+    photoURL = null
   ) => {
     const user = firebase.auth().currentUser;
+    // If there is no user found, i.e user is not authenticated, exit the function
+    if (!user) return;
 
     try {
-      // If user provide an email for update, do so
-      if (email) {
-        await user.updateEmail(email);
-        setUser({
-          ...user,
-          email,
-        });
-      }
       // If user provide displayName or photoURL for updating, do so
       // Otherwise keep the same
       if (displayName || photoURL) {
@@ -177,6 +169,42 @@ export default function ContextWrapper(props) {
           ...user,
           displayName: displayName ? displayName : user.displayName,
           photoURL: photoURL ? photoURL : user.photoURL,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateCriticalUserProfile = async (email = null) => {
+    const user = firebase.auth().currentUser;
+    // If there is no user found, i.e user is not authenticated, exit the function
+    if (!user) return;
+
+    /**
+     * !NOTE: when update user email, user can still authenticate with both the old and new email for that same account
+     */
+    try {
+      // If user provide an email for update, we first need to re-authenticate user
+      if (email) {
+        // First we need to know how did user authenticated the last time
+        // Since we don't link an account with multiple authentication methods
+        // We are safe to say a user has only one way to authenticate
+        let userLastAuthenticatedProvider = user.providerData[0];
+        let provider;
+
+        // Create the provider accordingly to the last provider user used to authenticate
+        if (userLastAuthenticatedProvider.providerId === "google.com") {
+          provider = new firebase.auth.GoogleAuthProvider();
+        }
+        // * Reauthenticate user using popup instead of redirect because redirect cause the remaining code be ignored
+        await user.reauthenticateWithPopup(provider);
+        // Update user's email in firebase
+        await user.updateEmail(email);
+        // Update user's email in local Context
+        setUser({
+          ...user,
+          email,
         });
       }
     } catch (err) {
@@ -200,7 +228,8 @@ export default function ContextWrapper(props) {
         startLesson,
         completeLesson,
         setAlert,
-        updateUserProfile,
+        updateCriticalUserProfile,
+        updateNonCriticalUserProfile,
       }}
     >
       {props.children}

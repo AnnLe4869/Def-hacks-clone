@@ -22,7 +22,7 @@ export default function ChangeEmailDialog(props) {
   };
 
   const submitEmailChange = () => {
-    context.updateUserProfile(null, null, email);
+    context.updateCriticalUserProfile(email);
     setEmail();
     closeDialog();
   };

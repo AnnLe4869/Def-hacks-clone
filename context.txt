@@ -6,6 +6,8 @@ interface Context {
   // This one use the firebase.auth().currentUser and below are the minimal requirement
   user: {
     email: string;
+    displayName: string;
+    photoURL: string
   };
 
   // Indicate whether the data is fetching
@@ -87,8 +89,10 @@ interface Context {
   completeLesson: (lessonId: string) => void;
   // Set the alert type and message
   setAlert: (type: ErrorAlert | SuccessAlert, message: string) => void;
-  // Update the user profile on firestore and local Context
-  updateUserProfile: (displayName: string | null, photoURL: string | null, email: string | null) => void
+  // Update the displayName and photoURL that don't need re-authenticate on firestore and local Context
+  updateNonCriticalUserProfile: (displayName: string | null, photoURL: string | null) => void
+  // Update the email and such that require re-authenticate on firestore and local Context
+  updateCriticalUserProfile: (email: string | null) => void
 }
 
 type ErrorAlert = string;
