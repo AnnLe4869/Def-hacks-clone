@@ -5,7 +5,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { CHOOSE_RADIO } from "./constant";
+import { CHOOSE_RADIO } from "../../../../../utils/constants";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

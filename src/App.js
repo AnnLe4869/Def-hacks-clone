@@ -12,11 +12,15 @@ import Learn from "./pages/learn";
 import Auth from "./pages/auth/index";
 import Profile from "./pages/profile/index";
 
+// Alert component
+import AppAlert from "./common/alert/AppAlert";
+
 function App() {
   const context = useContext(AppContext);
   const { user } = context;
   return (
     <div className="App">
+      <AppAlert />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />

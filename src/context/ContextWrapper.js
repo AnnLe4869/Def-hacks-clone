@@ -5,7 +5,7 @@ import firebase from "firebase";
 export default function ContextWrapper(props) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({});
+  const [alert, setAlert] = useState(null);
   const [userProgress, setUserProgress] = useState([]);
   const [lastLesson, setLastLesson] = useState("");
   const [courses, setCourses] = useState([]);

@@ -5,7 +5,7 @@ import React, { useContext, useReducer } from "react";
 import { useHistory } from "react-router-dom";
 import AppContext from "../../../../../context/AppContext";
 import useLessonFromPath from "../../../../../utils/useLessonFromPath";
-import { CHECK_ANSWER, CHOOSE_RADIO } from "./constant";
+import { CHECK_ANSWER, CHOOSE_RADIO } from "../../../../../utils/constants";
 import QuizItem from "./QuizItem";
 
 const useStyles = makeStyles((theme) =>

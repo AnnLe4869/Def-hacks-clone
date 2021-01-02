@@ -16,7 +16,7 @@ interface Context {
 
   // Used to alert user of an action, whether it's success or fail
   alert: {
-    type: SuccessAlert | ErrorAlert;
+    type: SuccessAlert | ErrorAlert | WarningAlert | InfoAlert;
     message: string;
   };
 
@@ -88,7 +88,7 @@ interface Context {
   // Toggle the done status of a lesson, basically update the userProgress variable
   completeLesson: (lessonId: string) => void;
   // Set the alert type and message
-  setAlert: (type: ErrorAlert | SuccessAlert, message: string) => void;
+  setAlert: (type: ErrorAlert | SuccessAlert | WarningAlert | InfoAlert, message: string) => void;
   // Update the displayName and photoURL that don't need re-authenticate on firestore and local Context
   updateNonCriticalUserProfile: (displayName: string | null, photoURL: string | null) => void
   // Update the email and such that require re-authenticate on firestore and local Context
@@ -99,3 +99,5 @@ interface Context {
 
 type ErrorAlert = string;
 type SuccessAlert = string;
+type WarningAlert = string;
+type InfoAlert = string;
