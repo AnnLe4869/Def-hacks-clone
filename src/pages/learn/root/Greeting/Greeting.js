@@ -1,9 +1,9 @@
-import { Container, Button, Typography } from "@material-ui/core";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import React, { useContext } from "react";
-import AppContext from "../../../../context/AppContext.js";
+import { Button, Container, Typography } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import AppContext from "../../../../context/AppContext.js";
 import findCourseLessonBelong from "../../../../utils/findCourseLessonBelong.js";
 
 const useStyles = makeStyles((theme) => ({

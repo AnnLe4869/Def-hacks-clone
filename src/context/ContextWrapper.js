@@ -182,7 +182,10 @@ export default function ContextWrapper(props) {
     if (!user) return;
 
     /**
-     * !NOTE: when update user email, user can still authenticate with both the old and new email for that same account
+     * !NOTE: when update user email, user can NOT authenticate with the old email for that account anymore
+     * *That old email is removed from the authentication list
+     * !HOWEVER, this process of removal won't happen immediately, and after changing to new email user can still use old email for sign in
+     * *Detail on this behavior go to this SO question https://stackoverflow.com/questions/43131526/after-using-firebase-email-update-api-how-do-i-reuse-the-old-email
      */
     try {
       // If user provide an email for update, we first need to re-authenticate user
