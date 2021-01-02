@@ -16,6 +16,7 @@ export default function Learn() {
     if (!(context.courses.length > 2)) {
       context.initializeCourses();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

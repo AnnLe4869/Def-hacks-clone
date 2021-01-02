@@ -1,9 +1,10 @@
 import { Container, Button, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import React, { useContext } from "react";
 import AppContext from "../../../../context/AppContext.js";
 import { green } from "@material-ui/core/colors";
 import { useHistory } from "react-router-dom";
+import findCourseLessonBelong from "../../../../utils/findCourseLessonBelong.js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,9 +30,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Greeting() {
   const classes = useStyles();
-  const { user } = useContext(AppContext);
-
+  const { user, courses, lastLesson: lastLessonId } = useContext(AppContext);
   const history = useHistory();
+
+  const goToLastLesson = () => {
+    // If there is last lesson, i.e user has done some lesson before
+    if (lastLessonId !== "") {
+      // Find the course the lesson belong to
+
+      const courseLessonBelongTo = findCourseLessonBelong(
+        courses,
+        lastLessonId
+      );
+
+      // If we can find the course that lesson belong to, navigate to that
+      if (courseLessonBelongTo) {
+        history.push(
+          `/learn/courses/${courseLessonBelongTo.id}/lessons/${lastLessonId}`
+        );
+      }
+    } else {
+      // Otherwise (i.e user is new)
+      // Go to the first course, first lesson
+      const firstCourse = courses[0];
+      const firstLesson = firstCourse.content[0];
+      history.push(
+        `/learn/courses/${firstCourse.id}/lessons/${firstLesson.id}`
+      );
+    }
+  };
 
   const signIn = () => {
     history.push("/auth");
@@ -39,9 +66,19 @@ export default function Greeting() {
   return (
     <Container maxWidth="lg" className={classes.root}>
       {user ? (
-        <Typography variant="h3" align="center">
-          Welcome back {user.displayName}
-        </Typography>
+        <>
+          <Typography variant="h3" align="center">
+            Welcome back {user.displayName}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={goToLastLesson}
+          >
+            Go to the last lesson
+          </Button>
+        </>
       ) : (
         <div>
           {/* Welcome message */}
