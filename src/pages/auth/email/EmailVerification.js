@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 import AppContext from "../../../context/AppContext";
+import { SUCCESS, ERROR } from "../../../utils/constants";
 
 export default function EmailVerification() {
   const history = useHistory();
@@ -36,6 +37,9 @@ export default function EmailVerification() {
 
           // Here we initialize user's data
           context.initializeUserData(result.user, result.additionalUserInfo);
+
+          // Set alert telling that user succeed in authenticating
+          context.setAlert(SUCCESS, "You have successfully logged in");
           // Then go to /learn route
           history.push("/learn");
         })
@@ -43,6 +47,14 @@ export default function EmailVerification() {
           // Some error occurred, you can inspect the code: error.code
           // Common errors could be invalid email and invalid or expired OTPs.
           console.error(error);
+
+          // Set alert message
+          context.setAlert(
+            ERROR,
+            "Something have gone wrong in the process. Please try again"
+          );
+          // Redirect user to /auth/email for retrying
+          history.push("/auth/email");
         });
     }
   });

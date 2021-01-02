@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AppContext from "./AppContext";
 import firebase from "firebase";
+import { SUCCESS, ERROR } from "../utils/constants";
 
 export default function ContextWrapper(props) {
   const [user, setUser] = useState(null);
@@ -170,9 +171,13 @@ export default function ContextWrapper(props) {
           displayName: displayName ? displayName : user.displayName,
           photoURL: photoURL ? photoURL : user.photoURL,
         });
+        // Send success message
+        updateAlert(SUCCESS, "You have successfully update your profile");
       }
     } catch (err) {
       console.error(err);
+      // Send error alert
+      updateAlert(ERROR, "Something went wrong. Please try again");
     }
   };
 
@@ -209,9 +214,16 @@ export default function ContextWrapper(props) {
           ...user,
           email,
         });
+        // Send success message
+        updateAlert(
+          SUCCESS,
+          "You have successfully update your email address. You can now use this new email to sign in"
+        );
       }
     } catch (err) {
       console.error(err);
+      // Send error alert
+      updateAlert(ERROR, "Something went wrong. Please try again");
     }
   };
 
@@ -225,6 +237,14 @@ export default function ContextWrapper(props) {
 
       setLastLesson(lessonId);
     } catch (error) {}
+  };
+
+  const updateAlert = (type, message = "") => {
+    if (type === null) {
+      setAlert(null);
+      return;
+    }
+    setAlert({ type, message });
   };
 
   return (
@@ -242,7 +262,7 @@ export default function ContextWrapper(props) {
         setLoading,
         startLesson,
         completeLesson,
-        setAlert,
+        setAlert: updateAlert,
         updateCriticalUserProfile,
         updateNonCriticalUserProfile,
         updateLastLesson,

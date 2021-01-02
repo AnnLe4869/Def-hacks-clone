@@ -5,6 +5,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import MuiAlert from "@material-ui/lab/Alert";
 import React, { useContext } from "react";
 import AppContext from "../../context/AppContext";
+import { ERROR } from "../../utils/constants";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -29,28 +30,31 @@ export default function AppAlert() {
 
   return (
     <div className={classes.root}>
-      <Snackbar
-        open={Boolean(alert)}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        anchorOrigin={{ horizontal: "center", vertical: "top" }}
-      >
-        <Alert
-          severity="success"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={handleClose}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
+      {alert ? (
+        <Snackbar
+          open={Boolean(alert)}
+          // If error message we want it to hand there and won't go away unless user close it
+          autoHideDuration={alert.type === ERROR ? null : 6000}
+          onClose={handleClose}
+          anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
         >
-          This is a success message!
-        </Alert>
-      </Snackbar>
+          <Alert
+            severity={alert.type}
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={handleClose}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
+      ) : null}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import AppContext from "../../../context/AppContext";
+import { SUCCESS, ERROR } from "../../../utils/constants";
 
 import firebase from "firebase";
 
@@ -31,10 +32,17 @@ export default function Auth() {
       const provider = new firebase.auth.GoogleAuthProvider();
       const result = await firebase.auth().signInWithPopup(provider);
       context.initializeUserData(result.user, result.additionalUserInfo);
-      // After all that, go to /learn route
+      // Set alert telling that user succeed in authenticating
+      context.setAlert(SUCCESS, "You have successfully logged in");
+      // And go to /learn route
       history.push("/learn");
     } catch (err) {
       console.error(err);
+      // Set alert message
+      context.setAlert(
+        ERROR,
+        "Something have gone wrong in the process. Please try again"
+      );
     }
   };
   const handleTwitterLogIn = () => {
