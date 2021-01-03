@@ -10,7 +10,7 @@ import emailValidate from "../../../utils/emailValidate";
 import firebase from "firebase";
 
 const actionCodeSettings = {
-  url: "https://localhost:3000/auth/email/verification",
+  url: "https://def-hacks-clone.web.app/auth/email/verification",
   // This must be true.
   handleCodeInApp: true,
 };
