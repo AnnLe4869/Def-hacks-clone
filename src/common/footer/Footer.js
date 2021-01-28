@@ -31,12 +31,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   leftColumn: {
-    paddingLeft: theme.spacing(5),
-    marginBottom: theme.spacing(5),
-    [theme.breakpoints.down("md")]: {
-      textAlign: "center",
-      paddingLeft: 0,
-      paddingBottom: theme.spacing(3),
+    textAlign: "center",
+    paddingLeft: 0,
+    paddingBottom: theme.spacing(3),
+
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(5),
+      paddingLeft: theme.spacing(5),
     },
   },
 
@@ -101,6 +102,7 @@ function Footer() {
           justify="center"
           alignItems="flex-start"
           className={classes.rightColumn}
+          spacing={3}
         >
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Typography variant="h4" className={classes.columnTitle}>
