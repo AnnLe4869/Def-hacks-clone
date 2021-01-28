@@ -120,6 +120,10 @@ export default function EmailInput() {
     }
   }, []);
 
+  if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    return <Loading />;
+  }
+
   return (
     <Container component="main" maxWidth="md">
       <div className={classes.paper}>
