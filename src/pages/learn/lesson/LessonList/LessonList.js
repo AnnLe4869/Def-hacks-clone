@@ -52,12 +52,12 @@ export default function LessonList() {
         className={classes.courseHeader}
         onClick={() => history.push("/learn")}
       >
+        <ArrowLeftIcon
+          color="primary"
+          fontSize="large"
+          className="courseHeaderIcon"
+        />
         <Typography variant="h6" color="primary">
-          <ArrowLeftIcon
-            color="primary"
-            fontSize="large"
-            className="courseHeaderIcon"
-          />
           {course.courseName}
         </Typography>
       </div>
