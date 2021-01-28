@@ -1,12 +1,10 @@
 import { Container, CssBaseline } from "@material-ui/core";
 import React from "react";
-import Header from "../../common/header/AppBarHeader";
-import Footer from "../../common/footer/Footer";
-import LogIn from "./root/LogIn";
-
 import { Redirect, Route, Switch } from "react-router-dom";
+import Footer from "../../common/footer/Footer";
+import Header from "../../common/header/AppBarHeader";
 import EmailInput from "./email/EmailInput";
-import EmailVerification from "./email/EmailVerification";
+import LogIn from "./root/LogIn";
 
 export default function Auth() {
   return (
@@ -17,10 +15,7 @@ export default function Auth() {
         <Switch>
           <Route path="/auth" exact component={LogIn} />
           <Route path="/auth/email" exact component={EmailInput} />
-          <Route
-            path="/auth/email/verification"
-            component={EmailVerification}
-          />
+
           <Redirect to="/auth" />
         </Switch>
       </Container>
