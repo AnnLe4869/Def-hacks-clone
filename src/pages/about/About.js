@@ -19,10 +19,15 @@ const useStyles = makeStyles((theme) =>
     },
 
     missionMessageContainer: {
-      maxWidth: "50%",
       marginTop: theme.spacing(5),
       padding: theme.spacing(2),
       backgroundColor: "#cde6f8",
+      textAlign: "left",
+
+      [theme.breakpoints.up("md")]: {
+        maxWidth: "50%",
+        textAlign: "center",
+      },
     },
     missionMessage: {
       fontFamily: "IBM Plex Mono, monospace",
@@ -49,11 +54,7 @@ function About() {
       <Container className={classes.root}>
         {/* Mission headline */}
         <div className={classes.missionMessageContainer}>
-          <Typography
-            variant="h5"
-            align="center"
-            className={classes.missionMessage}
-          >
+          <Typography variant="h5" className={classes.missionMessage}>
             Providing free, world‑class computer science education for
             underrepresented youth.
           </Typography>

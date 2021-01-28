@@ -31,13 +31,16 @@ const useStyles = makeStyles((theme) => ({
   },
 
   leftColumn: {
-    textAlign: "center",
     paddingLeft: 0,
     paddingBottom: theme.spacing(3),
 
     [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(5),
       paddingLeft: theme.spacing(5),
+    },
+
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
     },
   },
 
