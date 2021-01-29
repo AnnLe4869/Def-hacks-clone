@@ -6,9 +6,11 @@ import AppContext from "../../context/AppContext";
 import Lesson from "./lesson/index";
 import CourseList from "./root/CourseList/CourseList";
 import Greeting from "./root/Greeting/Greeting";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 export default function Learn() {
   const context = useContext(AppContext);
+  useScrollToTop();
 
   useEffect(() => {
     // If we haven't fetch all the course yet, do so

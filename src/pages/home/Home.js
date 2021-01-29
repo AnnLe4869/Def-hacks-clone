@@ -5,6 +5,8 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import { green, yellow } from "@material-ui/core/colors";
 import clsx from "clsx";
 
+import useScrollToTop from "../../utils/useScrollToTop";
+
 import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/AppBarHeader";
 
@@ -106,6 +108,7 @@ const useStyles = makeStyles((theme) =>
 function Home() {
   const classes = useStyles();
   const history = useHistory();
+  useScrollToTop();
 
   return (
     <>
