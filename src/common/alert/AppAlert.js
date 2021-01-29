@@ -36,7 +36,7 @@ export default function AppAlert() {
           // If error message we want it to hand there and won't go away unless user close it
           autoHideDuration={alert.type === ERROR ? null : 6000}
           onClose={handleClose}
-          anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+          anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         >
           <Alert
             severity={alert.type}

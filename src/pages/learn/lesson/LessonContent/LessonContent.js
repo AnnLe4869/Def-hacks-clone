@@ -6,12 +6,12 @@ import IconButton from "@material-ui/core/IconButton";
 import { createStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useContext, useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import AppContext from "../../../../context/AppContext";
 import useLessonFromPath from "../../../../utils/useLessonFromPath";
-import HomeIcon from "@material-ui/icons/Home";
 import Guide from "./guide/Guide";
 import Quiz from "./quiz/QuizList";
 

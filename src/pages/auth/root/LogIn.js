@@ -45,11 +45,41 @@ export default function Auth() {
       );
     }
   };
-  const handleTwitterLogIn = () => {
-    console.log("Twitter");
+  const handleTwitterLogIn = async () => {
+    try {
+      const provider = new firebase.auth.TwitterAuthProvider();
+      const result = await firebase.auth().signInWithPopup(provider);
+      context.initializeUserData(result.user, result.additionalUserInfo);
+      // Set alert telling that user succeed in authenticating
+      context.setAlert(SUCCESS, "You have successfully logged in");
+      // And go to /learn route
+      history.push("/learn");
+    } catch (err) {
+      console.error(err);
+      // Set alert message
+      context.setAlert(
+        ERROR,
+        "Something have gone wrong in the process. Please try again"
+      );
+    }
   };
-  const handleGithubLogIn = () => {
-    console.log("Github");
+  const handleGithubLogIn = async () => {
+    try {
+      const provider = new firebase.auth.GithubAuthProvider();
+      const result = await firebase.auth().signInWithPopup(provider);
+      context.initializeUserData(result.user, result.additionalUserInfo);
+      // Set alert telling that user succeed in authenticating
+      context.setAlert(SUCCESS, "You have successfully logged in");
+      // And go to /learn route
+      history.push("/learn");
+    } catch (err) {
+      console.error(err);
+      // Set alert message
+      context.setAlert(
+        ERROR,
+        "Something have gone wrong in the process. Please try again"
+      );
+    }
   };
   const handleEmailLogIn = () => {
     history.push("/auth/email");

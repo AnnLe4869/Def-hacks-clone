@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import DOMPurify from "dompurify";
 import React from "react";
 import { useHistory } from "react-router-dom";
