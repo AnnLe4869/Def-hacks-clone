@@ -7,8 +7,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import DoneIcon from "@material-ui/icons/Done";
 import React, { useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 import AppContext from "../../../../context/AppContext";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,6 +23,16 @@ const useStyles = makeStyles((theme) =>
     lessonList: {
       backgroundColor: grey[50],
     },
+    lessonListSubItem: {
+      "&:hover": {
+        textDecoration: "underline",
+        cursor: "pointer",
+      },
+    },
+
+    underlineText: {
+      textDecoration: "underline",
+    },
   })
 );
 
@@ -30,7 +41,7 @@ export default function LessonItem(props) {
   const history = useHistory();
   const { lesson: simplifiedLesson } = props;
   const context = useContext(AppContext);
-  // This is the ID of the selected lesson we are viewing
+  // This is the ID of the current selected lesson we are viewing
   const { lessonId, courseId } = useParams();
 
   // Check if user has complete this lesson
@@ -38,9 +49,26 @@ export default function LessonItem(props) {
     (lesson) => lesson.id === simplifiedLesson.id
   );
 
+  // Check which section we are in: guide or quiz
+  const isGuideRoute = useRouteMatch(
+    "/learn/courses/:courseId/lessons/:lessonId/guide"
+  );
+
   const handleClick = () => {
     // We change the url to our wanted lesson, thus make it open
     history.push(`/learn/courses/${courseId}/lessons/${simplifiedLesson.id}`);
+  };
+
+  const navigateToQuiz = () => {
+    history.push(
+      `/learn/courses/${courseId}/lessons/${simplifiedLesson.id}/quiz`
+    );
+  };
+
+  const navigateToGuide = () => {
+    history.push(
+      `/learn/courses/${courseId}/lessons/${simplifiedLesson.id}/guide`
+    );
   };
 
   return (
@@ -64,8 +92,24 @@ export default function LessonItem(props) {
       >
         <div className={classes.lessonList}>
           <List component="div" disablePadding>
-            <ListItem>Practice</ListItem>
-            <ListItem>Quiz</ListItem>
+            <ListItem
+              className={clsx(
+                classes.lessonListSubItem,
+                isGuideRoute ? classes.underlineText : null
+              )}
+              onClick={navigateToGuide}
+            >
+              Guide
+            </ListItem>
+            <ListItem
+              className={clsx(
+                classes.lessonListSubItem,
+                !isGuideRoute ? classes.underlineText : null
+              )}
+              onClick={navigateToQuiz}
+            >
+              Quiz
+            </ListItem>
           </List>
         </div>
       </Collapse>
