@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) =>
     content: {
       maxHeight: "calc(100vh - 65px)",
       overflow: "auto",
+
+      [theme.breakpoints.up("lg")]: {
+        maxWidth: "100vw",
+      },
     },
   })
 );

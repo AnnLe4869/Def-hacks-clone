@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  buttonSpacing: {
+    marginBottom: theme.spacing(3),
+  },
+
   paragraph: {
     marginTop: theme.spacing(3),
   },
@@ -60,9 +64,14 @@ export default function Greeting() {
     }
   };
 
+  const goToProfile = () => {
+    history.push("/profile");
+  };
+
   const signIn = () => {
     history.push("/auth");
   };
+
   return (
     <Container maxWidth="lg" className={classes.root}>
       {user ? (
@@ -75,8 +84,18 @@ export default function Greeting() {
             color="primary"
             fullWidth
             onClick={goToLastLesson}
+            className={classes.buttonSpacing}
           >
             Go to the last lesson
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={goToProfile}
+          >
+            Go to my profile
           </Button>
         </>
       ) : (

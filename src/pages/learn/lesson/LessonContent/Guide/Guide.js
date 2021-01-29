@@ -5,13 +5,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import useLessonFromPath from "../../../../../utils/useLessonFromPath";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    nextButton: {
-      float: "right",
-    },
-  })
-);
+const useStyles = makeStyles((theme) => ({
+  nextButton: {
+    float: "right",
+  },
+}));
 
 export default function Guide() {
   const classes = useStyles();

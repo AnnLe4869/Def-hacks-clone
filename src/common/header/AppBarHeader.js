@@ -5,12 +5,14 @@ import InputBase from "@material-ui/core/InputBase";
 import { createStyles, fade, makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import InfoIcon from "@material-ui/icons/Info";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import AppContext from "../../context/AppContext";
-import Logo from "./logo.svg";
-
+import CurriculumIcon from "./curriculum_icon.svg";
+import Logo from "./defhacks_logo.svg";
 const useStyles = makeStyles((theme) =>
   createStyles({
     grow: {
@@ -38,6 +40,7 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.up("md")]: {
         marginLeft: theme.spacing(3),
         width: "auto",
+        display: "block",
       },
     },
     searchIcon: {
@@ -66,6 +69,13 @@ const useStyles = makeStyles((theme) =>
       display: "none",
       [theme.breakpoints.up("md")]: {
         display: "flex",
+      },
+    },
+
+    sectionMobile: {
+      display: "flex",
+      [theme.breakpoints.up("md")]: {
+        display: "none",
       },
     },
     option: {
@@ -114,7 +124,7 @@ export default function AppBarHeader() {
           </div>
           <div className={classes.grow} />
 
-          {/* Route navigation button */}
+          {/* Route navigation button, desktop view */}
           <div className={classes.sectionDesktop}>
             <Button
               color="inherit"
@@ -139,6 +149,46 @@ export default function AppBarHeader() {
                 Sign in
               </Button>
             )}
+          </div>
+
+          {/* Route navigation button, mobile view */}
+          <div className={classes.sectionMobile}>
+            {/* Curriculum section */}
+            <IconButton
+              aria-label="curriculum"
+              color="inherit"
+              onClick={() => history.push("/learn")}
+              className={classes.option}
+            >
+              <img
+                alt="logo"
+                src={CurriculumIcon}
+                style={{ height: "2.1875rem" }}
+              />
+            </IconButton>
+
+            {/* Profile section */}
+            <IconButton
+              aria-label="account or sign in"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+              className={classes.option}
+              onClick={() =>
+                user ? history.push("/profile") : history.push("/auth")
+              }
+            >
+              <AccountCircleIcon fontSize="large" />
+            </IconButton>
+
+            {/* About section */}
+            <IconButton
+              aria-label="about"
+              color="inherit"
+              onClick={() => history.push("/about")}
+            >
+              <InfoIcon fontSize="large" />
+            </IconButton>
           </div>
         </Toolbar>
       </AppBar>
