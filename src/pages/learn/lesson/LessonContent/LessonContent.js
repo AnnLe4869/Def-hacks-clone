@@ -1,15 +1,17 @@
+import { useMediaQuery } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import { grey } from "@material-ui/core/colors";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles, useTheme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useContext, useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import AppContext from "../../../../context/AppContext";
 import useLessonFromPath from "../../../../utils/useLessonFromPath";
+import HomeIcon from "@material-ui/icons/Home";
 import Guide from "./guide/Guide";
 import Quiz from "./quiz/QuizList";
 
@@ -35,9 +37,15 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function LessonContent() {
+export default function LessonContent(props) {
   const classes = useStyles();
   const context = useContext(AppContext);
+
+  // Check if the window is larger than medium size
+  const theme = useTheme();
+  const isLargerThanMd = useMediaQuery(theme.breakpoints.up("md"));
+
+  const history = useHistory();
 
   const [lesson, courseId, lessonId] = useLessonFromPath();
 
@@ -71,14 +79,30 @@ export default function LessonContent() {
         {/* App bar that show the lesson name */}
         <AppBar position="static" className={classes.headerBar}>
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+            {isLargerThanMd ? (
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={props.toggleDisplay}
+              >
+                <MenuIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={() => {
+                  history.push("/learn");
+                }}
+              >
+                <HomeIcon />
+              </IconButton>
+            )}
+
             <Typography variant="h6" className={classes.title} align="center">
               {lesson.lessonName}
             </Typography>

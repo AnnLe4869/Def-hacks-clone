@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) =>
     lessonListSubItem: {
       "&:hover": {
         textDecoration: "underline",
+        color: "blue",
         cursor: "pointer",
       },
     },

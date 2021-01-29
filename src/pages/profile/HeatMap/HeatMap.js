@@ -1,11 +1,9 @@
+import { Container } from "@material-ui/core";
 import React, { useContext } from "react";
-
-import { Container, Typography } from "@material-ui/core";
 import ReactTooltip from "react-tooltip";
-
+import AppContext from "../../../context/AppContext";
 import CalendarHeatMap from "./CalendarHeatMapPkg/index";
 import "./CalendarHeatMapPkg/styles.css";
-import AppContext from "../../../context/AppContext";
 
 export default function HeatMap() {
   const { userProgress } = useContext(AppContext);
