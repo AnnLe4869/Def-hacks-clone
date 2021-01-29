@@ -111,6 +111,7 @@ function Footer() {
             <Typography variant="h4" className={classes.columnTitle}>
               Contact Us
             </Typography>
+            {/* Facebook page */}
             <Typography
               variant="h6"
               className={classes.externalLink}
@@ -118,8 +119,17 @@ function Footer() {
               href=""
             >
               <FacebookIcon />
-              <Typography variant="h6">Facebook</Typography>
+              <Typography
+                variant="h6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open("https://www.facebook.com/defhacks", "__blank");
+                }}
+              >
+                Facebook
+              </Typography>
             </Typography>
+            {/* Twitter page */}
             <Typography
               variant="h6"
               component="a"
@@ -127,8 +137,17 @@ function Footer() {
               className={classes.externalLink}
             >
               <TwitterIcon />
-              <Typography variant="h6">Twitter</Typography>
+              <Typography
+                variant="h6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open("https://twitter.com/def_hacks", "__blank");
+                }}
+              >
+                Twitter
+              </Typography>
             </Typography>
+            {/* Instagram page */}
             <Typography
               variant="h6"
               component="a"
@@ -136,8 +155,20 @@ function Footer() {
               className={classes.externalLink}
             >
               <InstagramIcon />
-              <Typography variant="h6">Instagram</Typography>
+              <Typography
+                variant="h6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    "https://www.instagram.com/def_hacks/",
+                    "__blank"
+                  );
+                }}
+              >
+                Instagram
+              </Typography>
             </Typography>
+            {/* LinkedIn page */}
             <Typography
               variant="h6"
               component="a"
@@ -145,7 +176,18 @@ function Footer() {
               className={classes.externalLink}
             >
               <LinkedInIcon />
-              <Typography variant="h6">LinkedIn</Typography>
+              <Typography
+                variant="h6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    "https://www.linkedin.com/company/def-hacks/",
+                    "__blank"
+                  );
+                }}
+              >
+                LinkedIn
+              </Typography>
             </Typography>
           </Grid>
 

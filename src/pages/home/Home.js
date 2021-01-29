@@ -69,10 +69,14 @@ const useStyles = makeStyles((theme) =>
     },
 
     questionPromptContainer: {
-      maxWidth: "40%",
+      maxWidth: "90%",
       backgroundColor: green[100],
       boxShadow: "2rem -1.5rem #6298ea59",
       marginTop: "20vh",
+
+      [theme.breakpoints.up("md")]: {
+        maxWidth: "40%",
+      },
     },
     questionPromptText: {
       padding: theme.spacing(2),
@@ -93,14 +97,19 @@ const useStyles = makeStyles((theme) =>
     },
 
     excitePrompt: {
-      maxWidth: "60%",
+      maxWidth: "90%",
       marginTop: "20vh",
       backgroundColor: green[100],
+
+      [theme.breakpoints.up("md")]: {
+        maxWidth: "60%",
+      },
     },
 
     getStartBottomButton: {
       fontSize: "3.5rem",
       boxShadow: "-1rem 1rem #ffb00047",
+      marginTop: "15vh",
     },
   })
 );

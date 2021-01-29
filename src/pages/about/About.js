@@ -3,6 +3,7 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import Footer from "../../common/footer/Footer";
 import Header from "../../common/header/AppBarHeader";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme) =>
 
 function About() {
   const classes = useStyles();
+
+  useScrollToTop();
+
   return (
     <>
       <Header />
